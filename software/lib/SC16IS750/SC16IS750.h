@@ -116,14 +116,12 @@ class SC16IS750 : public Stream
         int read();
         size_t write(uint8_t val);
         int available();
-        void pinMode(uint8_t pin, uint8_t io);
-        void digitalWrite(uint8_t pin, uint8_t value);
-        uint8_t digitalRead(uint8_t pin);
 		uint8_t ping();
 	//	void setTimeout(uint32_t);
 	//	size_t readBytes(char *buffer, size_t length);
 		int peek();
 		void flush();
+        uint8_t readRegister(uint8_t reg_addr);
 		uint8_t GPIOGetPortState(void);
 		uint8_t InterruptPendingTest(void);
 		void    SetPinInterrupt(uint8_t io_int_ena);

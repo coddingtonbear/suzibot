@@ -19,56 +19,37 @@ CC BY-NC-SA 3.0
 Please keep the above information when you use this code in your project.
 */
 
-
 //#define SC16IS750_DEBUG_PRINT
 #include <SC16IS750.h>
 #include <SPI.h>
-#include <Wire.h>
 
 
-#ifdef __AVR__
- #define WIRE Wire
-#else // Arduino Due
- #define WIRE Wire1
-#endif
+SPISettings settings(2000000, MSBFIRST, SPI_MODE0);
 
 
-SC16IS750::SC16IS750(uint8_t prtcl, uint8_t addr_sspin, unsigned long crystal_freq)
-{
+SC16IS750::SC16IS750(
+    uint8_t prtcl,
+    uint8_t addr_sspin,
+    unsigned long crystal_freq
+){
     protocol = prtcl;
     crystal_frequency = crystal_freq;
-    if ( protocol == SC16IS750_PROTOCOL_I2C ) {
-		device_address_sspin = (addr_sspin>>1);
-	} else {
-		device_address_sspin = addr_sspin;
-	}
-	peek_flag = 0;
-//	timeout = 1000;
+    device_address_sspin = addr_sspin;
+    pinMode(device_address_sspin, OUTPUT);
+    peek_flag = 0;
 }
 
 
 void SC16IS750::begin(uint32_t baud)
 {
-    //Serial.println("1111111111111111");
-	if ( protocol == SC16IS750_PROTOCOL_I2C) {
-	//Serial.println("22222222222222");
-        WIRE.begin();
-    } else {
-	//Serial.println("3333333333333333333");
-		::pinMode(device_address_sspin, OUTPUT);
-   	    ::digitalWrite(device_address_sspin, HIGH);
-		SPI.setDataMode(SPI_MODE0);
-		SPI.setClockDivider(SPI_CLOCK_DIV4);
-		SPI.setBitOrder(MSBFIRST);
-		SPI.begin();
-		//SPI.setClockDivider(32);
-
-	//Serial.println("4444444444444444444");
-	};
+    SPI.beginTransaction(settings);
+    digitalWrite(device_address_sspin, LOW);
     ResetDevice();
     FIFOEnable(1);
-	Serial.println(SetBaudrate(baud));
+    SetBaudrate(baud);
     SetLine(8,0,1);
+    digitalWrite(device_address_sspin, HIGH);
+    SPI.endTransaction();
 }
 
 int SC16IS750::available(void)
@@ -78,12 +59,12 @@ int SC16IS750::available(void)
 
 int SC16IS750::read(void)
 {
-	if ( peek_flag == 0) {
-		return ReadByte();
-	} else {
-		peek_flag = 0;
-		return peek_buf;
-	}
+    if ( peek_flag == 0) {
+        return ReadByte();
+    } else {
+        peek_flag = 0;
+        return peek_buf;
+    }
 }
 
 size_t SC16IS750::write(uint8_t val)
@@ -91,64 +72,36 @@ size_t SC16IS750::write(uint8_t val)
     WriteByte(val);
 }
 
-void SC16IS750::pinMode(uint8_t pin, uint8_t i_o)
-{
-    GPIOSetPinMode(pin, i_o);
-}
-
-void SC16IS750::digitalWrite(uint8_t pin, uint8_t value)
-{
-    GPIOSetPinState(pin, value);
-}
-
-uint8_t SC16IS750::digitalRead(uint8_t pin)
-{
-   return GPIOGetPinState(pin);
-}
-
-
 uint8_t SC16IS750::ReadRegister(uint8_t reg_addr)
 {
     uint8_t result;
-	if ( protocol == SC16IS750_PROTOCOL_I2C ) {  // register read operation via I2C
+    SPI.beginTransaction(settings);
+    digitalWrite(device_address_sspin, LOW);
+    delayMicroseconds(10);
+    SPI.transfer(0x80|(reg_addr<<3));
+    result = SPI.transfer(0xff);
+    delayMicroseconds(10);
+    digitalWrite(device_address_sspin, HIGH);
+    SPI.endTransaction();
 
-		WIRE.beginTransmission(device_address_sspin);
-		WIRE.write((reg_addr<<3));
-		WIRE.endTransmission(0);
-		WIRE.requestFrom(device_address_sspin,(uint8_t)1);
-		result = WIRE.read();
-	} else if (protocol == SC16IS750_PROTOCOL_SPI) {                                   //register read operation via SPI
-		::digitalWrite(device_address_sspin, LOW);
-		delayMicroseconds(10);
-		SPI.transfer(0x80|(reg_addr<<3));
-		result = SPI.transfer(0xff);
-		delayMicroseconds(10);
-		::digitalWrite(device_address_sspin, HIGH);
-	}
+    return result;
+}
 
-	return result;
-
+uint8_t SC16IS750::readRegister(uint8_t reg_addr)
+{
+    return ReadRegister(reg_addr);
 }
 
 void SC16IS750::WriteRegister(uint8_t reg_addr, uint8_t val)
 {
-    if ( protocol == SC16IS750_PROTOCOL_I2C ) {  // register read operation via I2C
-		WIRE.beginTransmission(device_address_sspin);
-		WIRE.write((reg_addr<<3));
-		WIRE.write(val);
-		WIRE.endTransmission(1);
-	} else {
-		::digitalWrite(device_address_sspin, LOW);
-		delayMicroseconds(10);
-		Serial.println(SPI.transfer(reg_addr<<3));
-		Serial.println(SPI.transfer(val));
-		delayMicroseconds(10);
-		::digitalWrite(device_address_sspin, HIGH);
-
-	}
-
-
-    return ;
+    SPI.beginTransaction(settings);
+    digitalWrite(device_address_sspin, LOW);
+    delayMicroseconds(10);
+    SPI.transfer(reg_addr<<3);
+    SPI.transfer(val);
+    delayMicroseconds(10);
+    digitalWrite(device_address_sspin, HIGH);
+    SPI.endTransaction();
 }
 
 int16_t SC16IS750::SetBaudrate(uint32_t baudrate) //return error of baudrate parts per thousand
@@ -463,24 +416,24 @@ uint8_t SC16IS750::FIFOAvailableSpace(void)
 
 void SC16IS750::WriteByte(uint8_t val)
 {
-	uint8_t tmp_lsr;
+    uint8_t tmp_lsr;
  /*   while ( FIFOAvailableSpace() == 0 ){
 #ifdef  SC16IS750_DEBUG_PRINT
-		Serial.println("No available space");
+        Serial.println("No available space");
 #endif
 
-	};
+    };
 
 #ifdef  SC16IS750_DEBUG_PRINT
     Serial.println("++++++++++++Data sent");
 #endif
     WriteRegister(SC16IS750_REG_THR,val);
 */
-	do {
-		tmp_lsr = ReadRegister(SC16IS750_REG_LSR);
-	} while ((tmp_lsr&0x20) ==0);
+    do {
+        tmp_lsr = ReadRegister(SC16IS750_REG_LSR);
+    } while ((tmp_lsr&0x20) ==0);
 
-	WriteRegister(SC16IS750_REG_THR,val);
+    WriteRegister(SC16IS750_REG_THR,val);
 
 
 
@@ -488,21 +441,21 @@ void SC16IS750::WriteByte(uint8_t val)
 
 int SC16IS750::ReadByte(void)
 {
-	volatile uint8_t val;
-	if (FIFOAvailableData() == 0) {
+    volatile uint8_t val;
+    if (FIFOAvailableData() == 0) {
 #ifdef  SC16IS750_DEBUG_PRINT
-	Serial.println("No data available");
+    Serial.println("No data available");
 #endif
-		return -1;
+        return -1;
 
-	} else {
+    } else {
 
 #ifdef  SC16IS750_DEBUG_PRINT
-	Serial.println("***********Data available***********");
+    Serial.println("***********Data available***********");
 #endif
-	  val = ReadRegister(SC16IS750_REG_RHR);
-	  return val;
-	}
+      val = ReadRegister(SC16IS750_REG_RHR);
+      return val;
+    }
 
 
 }
@@ -523,40 +476,46 @@ void SC16IS750::EnableTransmit(uint8_t tx_enable)
 
 uint8_t SC16IS750::ping()
 {
-	WriteRegister(SC16IS750_REG_SPR,0x55);
-	if (ReadRegister(SC16IS750_REG_SPR) !=0x55) {
-		return 0;
-	}
+    int result = 1;
 
-	WriteRegister(SC16IS750_REG_SPR,0xAA);
-	if (ReadRegister(SC16IS750_REG_SPR) !=0xAA) {
-		return 0;
-	}
+    SPI.beginTransaction(settings);
+    digitalWrite(device_address_sspin, LOW);
+    WriteRegister(SC16IS750_REG_SPR,0x55);
+    if (ReadRegister(SC16IS750_REG_SPR) !=0x55) {
+        result = 0;
+    }
 
-	return 1;
+    WriteRegister(SC16IS750_REG_SPR,0xAA);
+    if (ReadRegister(SC16IS750_REG_SPR) !=0xAA) {
+        result = 0;
+    }
+
+    digitalWrite(device_address_sspin, HIGH);
+    SPI.endTransaction();
+    return result;
 
 }
 /*
 void SC16IS750::setTimeout(uint32_t time_out)
 {
-	timeout = time_out;
+    timeout = time_out;
 }
 
 size_t SC16IS750::readBytes(char *buffer, size_t length)
 {
-	size_t count=0;
-	int16_t tmp;
+    size_t count=0;
+    int16_t tmp;
 
-	while (count < length) {
-		tmp = readwithtimeout();
-		if (tmp < 0) {
-			break;
-		}
-		*buffer++ = (char)tmp;
-		count++;
-	}
+    while (count < length) {
+        tmp = readwithtimeout();
+        if (tmp < 0) {
+            break;
+        }
+        *buffer++ = (char)tmp;
+        count++;
+    }
 
-	return count;
+    return count;
 }
 
 int16_t SC16IS750::readwithtimeout()
@@ -574,24 +533,34 @@ int16_t SC16IS750::readwithtimeout()
 
 void SC16IS750::flush()
 {
-	uint8_t tmp_lsr;
+    uint8_t tmp_lsr;
 
-	do {
-		tmp_lsr = ReadRegister(SC16IS750_REG_LSR);
-	} while ((tmp_lsr&0x20) ==0);
+    SPI.beginTransaction(settings);
+    digitalWrite(device_address_sspin, LOW);
 
+    Serial.write("flushing...");
+
+    do {
+        tmp_lsr = ReadRegister(SC16IS750_REG_LSR);
+        Serial.print(tmp_lsr, DEC);
+        Serial.print(" ");
+    } while ((tmp_lsr&0x20) ==0);
+
+    digitalWrite(device_address_sspin, HIGH);
+    SPI.endTransaction();
+    Serial.write("flushed.");
 
 }
 
 int SC16IS750:: peek()
 {
-	if ( peek_flag == 0 ) {
-		peek_buf =ReadByte();
-		if (  peek_buf >= 0 ) {
-			peek_flag = 1;
-		}
-	}
+    if ( peek_flag == 0 ) {
+        peek_buf =ReadByte();
+        if (  peek_buf >= 0 ) {
+            peek_flag = 1;
+        }
+    }
 
-	return peek_buf;
+    return peek_buf;
 
 }
