@@ -28,11 +28,9 @@ SPISettings settings(2000000, MSBFIRST, SPI_MODE0);
 
 
 SC16IS750::SC16IS750(
-    uint8_t prtcl,
     uint8_t addr_sspin,
     unsigned long crystal_freq
 ){
-    protocol = prtcl;
     crystal_frequency = crystal_freq;
     device_address_sspin = addr_sspin;
     pinMode(device_address_sspin, OUTPUT);
@@ -85,11 +83,6 @@ uint8_t SC16IS750::ReadRegister(uint8_t reg_addr)
     SPI.endTransaction();
 
     return result;
-}
-
-uint8_t SC16IS750::readRegister(uint8_t reg_addr)
-{
-    return ReadRegister(reg_addr);
 }
 
 void SC16IS750::WriteRegister(uint8_t reg_addr, uint8_t val)
@@ -481,12 +474,34 @@ uint8_t SC16IS750::ping()
     SPI.beginTransaction(settings);
     digitalWrite(device_address_sspin, LOW);
     WriteRegister(SC16IS750_REG_SPR,0x55);
-    if (ReadRegister(SC16IS750_REG_SPR) !=0x55) {
+    byte firstResult = ReadRegister(SC16IS750_REG_SPR);
+    if (firstResult !=0x55) {
+        Serial.print("Write error (0x55 expected):");
+        Serial.print(firstResult, HEX);
+        Serial.print(" ");
+        firstResult = ReadRegister(SC16IS750_REG_SPR);
+        Serial.print(firstResult, HEX);
+        firstResult = ReadRegister(SC16IS750_REG_SPR);
+        Serial.print(firstResult, HEX);
+        Serial.print(" ");
+        firstResult = ReadRegister(SC16IS750_REG_SPR);
+        Serial.println(firstResult, HEX);
         result = 0;
     }
-
     WriteRegister(SC16IS750_REG_SPR,0xAA);
-    if (ReadRegister(SC16IS750_REG_SPR) !=0xAA) {
+    byte secondResult = ReadRegister(SC16IS750_REG_SPR);
+    if (secondResult !=0xAA) {
+        Serial.print("Write error (0xAA expected):");
+        Serial.print(secondResult, HEX);
+        Serial.print(" ");
+        secondResult = ReadRegister(SC16IS750_REG_SPR);
+        Serial.print(secondResult, HEX);
+        Serial.print(" ");
+        secondResult = ReadRegister(SC16IS750_REG_SPR);
+        Serial.print(secondResult, HEX);
+        Serial.print(" ");
+        secondResult = ReadRegister(SC16IS750_REG_SPR);
+        Serial.println(secondResult, HEX);
         result = 0;
     }
 

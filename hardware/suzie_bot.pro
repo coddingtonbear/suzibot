@@ -2,24 +2,24 @@ EAGLE AutoRouter Statistics:
 
 Job           : /Users/adamcoddington/Dropbox/Eagle/projects/SuzieBot/suzie_bot.brd
 
-Start at      : 23:15:45 (9/24/16)
-End at        : 23:17:21 (9/24/16)
-Elapsed time  : 00:01:35
+Start at      : 20:45:54 (9/27/16)
+End at        : 20:47:26 (9/27/16)
+Elapsed time  : 00:01:31
 
-Signals       :    37   RoutingGrid: 4.5 mil  Layers: 2
-Connections   :    79   predefined:  0 ( 0 Vias )
+Signals       :    34   RoutingGrid: 4.5 mil  Layers: 2
+Connections   :    69   predefined:  0 ( 0 Vias )
 
 Router memory :   2600960
 
 Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4 Optimize5 Optimize6 Optimize7 Optimize8 Optimize9Optimize10Optimize11Optimize12
 
-Time per pass     :  00:00:20  00:00:03  00:00:08  00:00:08  00:00:07  00:00:07  00:00:09  00:00:05  00:00:05  00:00:05  00:00:05  00:00:04  00:00:04  00:00:05
+Time per pass     :  00:00:18  00:00:00  00:00:09  00:00:07  00:00:07  00:00:06  00:00:07  00:00:08  00:00:06  00:00:05  00:00:05  00:00:04  00:00:05  00:00:04
 Number of Ripups  :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 max. Level        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 max. Total        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 
-Routed            :        60        79        79        79        79        79        79        79        79        79        79        79        79        79
-Vias              :         0         3         9         5         4         4         4         4         4         4         4         4         4         4
-Resolution        :    75.9 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
+Routed            :        69        69        69        69        69        69        69        69        69        69        69        69        69        69
+Vias              :         0         0         5         1         0         0         0         0         0         0         0         0         0         0
+Resolution        :   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
 Final             : 100.0% finished

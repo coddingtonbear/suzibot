@@ -97,7 +97,7 @@ Please keep the above information when you use this code in your project.
 
 //Application Related 
 
-#define     SC16IS750_DEBUG_PRINT   (1)
+//#define     SC16IS750_DEBUG_PRINT   (0)
 #define     SC16IS750_PROTOCOL_I2C  (0)
 #define     SC16IS750_PROTOCOL_SPI  (1)
 
@@ -108,7 +108,6 @@ class SC16IS750 : public Stream
 { 
     public:
         SC16IS750(
-            uint8_t prtcl = SC16IS750_PROTOCOL_I2C,
             uint8_t addr = SC16IS750_ADDRESS_AD,
             unsigned long crystal_frequency = 1843200UL
         );
@@ -121,7 +120,6 @@ class SC16IS750 : public Stream
 	//	size_t readBytes(char *buffer, size_t length);
 		int peek();
 		void flush();
-        uint8_t readRegister(uint8_t reg_addr);
 		uint8_t GPIOGetPortState(void);
 		uint8_t InterruptPendingTest(void);
 		void    SetPinInterrupt(uint8_t io_int_ena);
@@ -134,6 +132,8 @@ class SC16IS750 : public Stream
         unsigned long crystal_frequency;
         uint8_t device_address_sspin;
         uint8_t protocol;
+        void    BeginTransaction();
+        void    EndTransaction();
 	//	uint32_t timeout;
         int16_t SetBaudrate(uint32_t baudrate);
         uint8_t ReadRegister(uint8_t reg_addr);

@@ -2,7 +2,7 @@
 #include <SD.h>
 #include <SPI.h>
 #include <TinyGPS++.h>
-#include <Wire.h>
+#include <SoftwareSerial.h>
 
 #include "pitches.h"
 
@@ -12,14 +12,16 @@
 #define FILENAME_AP_PASSWORDS_DB "/db/ap.db"
 
 // GPS Settings
-#define CS_GPS A0
+//#define CS_GPS A0
+#define CS_GPS 10
 #define FILENAME_GPS_BACKLOG_DB "/db/gps.db"
 TinyGPSPlus gps;
-SC16IS750 gpsSpi = SC16IS750(
-    SC16IS750_PROTOCOL_SPI,
+SC16IS750 gpsSerial = SC16IS750(
     CS_GPS,
     1843200UL
+    //6000000UL
 );
+SoftwareSerial testOut(2, 3);
 
 // SD Card Settings
 #define CS_SD 10
@@ -82,23 +84,19 @@ void setup() {
 
     /* GPS */
     pinMode(CS_GPS, OUTPUT);
-    gpsSpi.begin(9600);
-    if(gpsSpi.ping() != 1) {
-        Serial.println("GPS Error");
-        playNotes(ERROR);
-    } else {
-        Serial.println("GPS OK");
-        playNotes(CONNECTED);
-    }
-    while(1) {
-        while(!gpsSpi.available()) {
-            Serial.println("Nothing available.");
-        }
-        Serial.println(gpsSpi.read());
-        delay(2000);
-    }
+    testOut.begin(9600);
+    gpsSerial.begin(9600);
 
-    delay(1000);
+    while(1){
+        if(gpsSerial.ping() != 1) {
+            Serial.println("GPS Error");
+            playNotes(ERROR);
+        } else {
+            Serial.println("GPS OK");
+            playNotes(CONNECTED);
+        }
+        delay(500);
+    }
 
     /* Piezo */
     pinMode(6, OUTPUT);
@@ -107,15 +105,11 @@ void setup() {
 }
 
 void updateLocation() {
-    /*unsigned long stopAfter = millis() + (unsigned long)1000;
-    gpsSerial.listen();
-
-    while (millis() < stopAfter) {
-        if (gpsSerial.available()) {
-            char gpsSerialValue = gpsSerial.read();
-            gps.encode(gpsSerialValue);
-        }
-    }*/
+    while(gpsSerial.available()) {
+        byte value = gpsSerial.read();
+        Serial.print(value, HEX);
+        gps.encode(value);
+    }
 }
 
 void logMessage(char* message) {
@@ -143,9 +137,8 @@ void powerOff() {
 }
 
 void loop() {
-    /*
-        updateLocation();
-    */
+    testOut.write("OK");
+    updateLocation();
 
     /*
     updateVoltage();
