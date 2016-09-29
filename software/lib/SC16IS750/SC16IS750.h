@@ -126,6 +126,8 @@ class SC16IS750 : public Stream
 		void    InterruptControl(uint8_t int_ena);
 		void    ModemPin(uint8_t gpio); //gpio == 0, gpio[7:4] are modem pins, gpio == 1 gpio[7:4] are gpios
 		void    GPIOLatch(uint8_t latch);
+        uint8_t ReadRegister(uint8_t reg_addr);
+        void    WriteRegister(uint8_t reg_addr, uint8_t val);
         
     
     private:
@@ -136,8 +138,6 @@ class SC16IS750 : public Stream
         void    EndTransaction();
 	//	uint32_t timeout;
         int16_t SetBaudrate(uint32_t baudrate);
-        uint8_t ReadRegister(uint8_t reg_addr);
-        void    WriteRegister(uint8_t reg_addr, uint8_t val);
         void    SetLine(uint8_t data_length, uint8_t parity_select, uint8_t stop_length );
         void    GPIOSetPinMode(uint8_t pin_number, uint8_t i_o);
         void    GPIOSetPinState(uint8_t pin_number, uint8_t pin_state);

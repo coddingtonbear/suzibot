@@ -88,14 +88,43 @@ void setup() {
     gpsSerial.begin(9600);
 
     while(1){
+        /*
+        Serial.print("LSR: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_LSR), BIN);
+        Serial.print("IER: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_IER), BIN);
+        Serial.print("FCR: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_FCR), BIN);
+        Serial.print("MCR: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_MCR), BIN);
+        Serial.print("LCR: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_LCR), BIN);
+        Serial.print("RXLVL: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_RXLVL), BIN);
+        uint8_t temp_lcr = gpsSerial.ReadRegister(SC16IS750_REG_LCR);
+        gpsSerial.WriteRegister(SC16IS750_REG_LCR, 0xbf);
+        Serial.print("LCR (temp): ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_LCR), BIN);
+        Serial.print("EFR: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_EFR), BIN);
+        gpsSerial.WriteRegister(SC16IS750_REG_LCR,temp_lcr);
+        Serial.print("LCR: ");
+        Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_LCR), BIN);
+        */
         if(gpsSerial.ping() != 1) {
             Serial.println("GPS Error");
-            playNotes(ERROR);
+            //playNotes(ERROR);
         } else {
-            Serial.println("GPS OK");
-            playNotes(CONNECTED);
+            //Serial.println("GPS OK");
+            //playNotes(CONNECTED);
         }
-        delay(500);
+
+        while(gpsSerial.available()) {
+            Serial.print((char)gpsSerial.read());
+            Serial.println();
+        }
+
+        Serial.println();
     }
 
     /* Piezo */
