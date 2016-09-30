@@ -110,7 +110,7 @@ void setup() {
         gpsSerial.WriteRegister(SC16IS750_REG_LCR,temp_lcr);
         Serial.print("LCR: ");
         Serial.println(gpsSerial.ReadRegister(SC16IS750_REG_LCR), BIN);
-        */
+
         if(gpsSerial.ping() != 1) {
             Serial.println("GPS Error");
             //playNotes(ERROR);
@@ -118,13 +118,13 @@ void setup() {
             //Serial.println("GPS OK");
             //playNotes(CONNECTED);
         }
+        */
 
         while(gpsSerial.available()) {
             Serial.print((char)gpsSerial.read());
-            Serial.println();
         }
 
-        Serial.println();
+        //Serial.println();
     }
 
     /* Piezo */
