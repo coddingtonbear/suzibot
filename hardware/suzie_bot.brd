@@ -1103,7 +1103,7 @@ design rules under a new name.</description>
 <signal name="N$36">
 <contactref element="U$1" pad="D4"/>
 <contactref element="U$11" pad="P$2"/>
-<wire x1="55.0926" y1="21.6027" x2="44.4627" y2="21.6027" width="0.254" layer="1"/>
+<wire x1="55.0926" y1="21.6027" x2="44.4627" y2="21.6027" width="0" layer="19" extent="1-16"/>
 <wire x1="59.0931" y1="25.6032" x2="55.0926" y2="21.6027" width="0.254" layer="1"/>
 <wire x1="71.3232" y1="25.6032" x2="59.0931" y2="25.6032" width="0.254" layer="1"/>
 <wire x1="71.755" y1="26.035" x2="71.3232" y2="25.6032" width="0.254" layer="1"/>

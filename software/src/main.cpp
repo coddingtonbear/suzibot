@@ -12,16 +12,14 @@
 #define FILENAME_AP_PASSWORDS_DB "/db/ap.db"
 
 // GPS Settings
-//#define CS_GPS A0
-#define CS_GPS 10
+#define CS_GPS A0
 #define FILENAME_GPS_BACKLOG_DB "/db/gps.db"
 TinyGPSPlus gps;
 SC16IS750 gpsSerial = SC16IS750(
+    SC16IS750_PROTOCOL_SPI,
     CS_GPS,
-    1843200UL
-    //6000000UL
+    14745600U
 );
-SoftwareSerial testOut(2, 3);
 
 // SD Card Settings
 #define CS_SD 10
@@ -42,22 +40,6 @@ const int ERROR[] = {NOTE_A4, NOTE_A4, NOTE_A4, NULL};
 #define RX_VOLTAGE A7
 #define TX_POWER_OFF 6
 double currentVoltage = 0;
-
-// SPI Devices
-#define SPI_SD 0
-#define SPI_GPS 1
-#define SPI_KLINE 2
-int spiDevices[] = {CS_SD, CS_GPS, CS_KLINE};
-
-void activateDevice(unsigned int id) {
-    for(unsigned int i = 0; i < sizeof(spiDevices); i++) {
-        if(i != id) {
-            digitalWrite(spiDevices[i], HIGH);
-        } else {
-            digitalWrite(spiDevices[i], LOW);
-        }
-    }
-}
 
 void playNotes(const int* notes) {
     for(unsigned int i = 0; i < 10; i++) {
@@ -84,7 +66,6 @@ void setup() {
 
     /* GPS */
     pinMode(CS_GPS, OUTPUT);
-    testOut.begin(9600);
     gpsSerial.begin(9600);
 
     while(1){
@@ -121,7 +102,7 @@ void setup() {
         */
 
         while(gpsSerial.available()) {
-            Serial.print((char)gpsSerial.read());
+            Serial.print(gpsSerial.read(), HEX);
         }
 
         //Serial.println();
@@ -166,7 +147,6 @@ void powerOff() {
 }
 
 void loop() {
-    testOut.write("OK");
     updateLocation();
 
     /*
