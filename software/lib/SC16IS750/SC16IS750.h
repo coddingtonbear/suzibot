@@ -35,6 +35,16 @@ Please keep the above information when you use this code in your project.
 //B:GND
 //C:SCL
 //D:SDA
+
+#define BIT_0 (0x01)
+#define BIT_1 (0x02)
+#define BIT_2 (0x04)
+#define BIT_3 (0x08)
+#define BIT_4 (0x10)
+#define BIT_5 (0x20)
+#define BIT_6 (0x40)
+#define BIT_7 (0x80)
+
 #define     SC16IS750_ADDRESS_AA     (0X90)
 #define     SC16IS750_ADDRESS_AB     (0X92)
 #define     SC16IS750_ADDRESS_AC     (0X94)
@@ -51,7 +61,6 @@ Please keep the above information when you use this code in your project.
 #define     SC16IS750_ADDRESS_DB     (0XAA)
 #define     SC16IS750_ADDRESS_DC     (0XAC)
 #define     SC16IS750_ADDRESS_DD     (0XAE)
-
 
 //General Registers
 #define     SC16IS750_REG_RHR        (0x00)
@@ -85,6 +94,10 @@ Please keep the above information when you use this code in your project.
 #define     SC16IS750_REG_XOFF1      (0X06)
 #define     SC16IS750_REG_XOFF2      (0X07)
 
+//Channels
+#define     SC16IS750_CHAN_A         (0x00)
+#define     SC16IS750_CHAN_B         (0x01)
+
 //
 #define     SC16IS750_INT_CTS        (0X80)
 #define     SC16IS750_INT_RTS        (0X40)
@@ -109,6 +122,7 @@ class SC16IS750 : public Stream
     public:
         SC16IS750(
             uint8_t addr = SC16IS750_ADDRESS_AD,
+            uint8_t chan = SC16IS750_CHAN_A,
             unsigned long crystal_frequency = 1843200UL
         );
         void begin(uint32_t baud);                               
@@ -128,19 +142,27 @@ class SC16IS750 : public Stream
 		void    GPIOLatch(uint8_t latch);
         uint8_t ReadRegister(uint8_t reg_addr);
         void    WriteRegister(uint8_t reg_addr, uint8_t val);
+        void    printAllRegisters(bool general=true, bool special=true, bool enhanced=false);
+        void    printRegister(uint8_t registerId);
+        void    printRegisters(uint8_t registers[], uint8_t size);
+
+        uint8_t* readAll();
+        void    writeBytes(uint8_t bytes[], uint8_t size);
+        void    GPIOSetPinMode(uint8_t pin_number, uint8_t i_o);
+        void    GPIOSetPinState(uint8_t pin_number, uint8_t pin_state);
         
     
     private:
         unsigned long crystal_frequency;
+        uint8_t channel;
         uint8_t device_address_sspin;
         uint8_t protocol;
+        uint8_t transfer(uint8_t byte);
         void    BeginTransaction();
         void    EndTransaction();
 	//	uint32_t timeout;
         int16_t SetBaudrate(uint32_t baudrate);
         void    SetLine(uint8_t data_length, uint8_t parity_select, uint8_t stop_length );
-        void    GPIOSetPinMode(uint8_t pin_number, uint8_t i_o);
-        void    GPIOSetPinState(uint8_t pin_number, uint8_t pin_state);
 		
         uint8_t GPIOGetPinState(uint8_t pin_number);
         void    GPIOSetPortMode(uint8_t port_io);
