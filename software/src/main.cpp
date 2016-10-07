@@ -1,7 +1,7 @@
 #include <SC16IS750.h>
-#include <SD.h>
-#include <TinyGPS++.h>
+#include <SdFat.h>
 #include <SPI.h>
+#include <TinyGPS++.h>
 
 #include "pitches.h"
 
@@ -19,13 +19,13 @@ SC16IS750 gpsSerial = SC16IS750(
     CS_GPS,
     SC16IS750_CHAN_A,
     14745600UL
-    //14592000UL
 );
 
 // SD Card Settings
 #define CS_SD 10
-#define FILENAME_LOG "/log.txt"
-File logFile;
+#define FILENAME_LOG "log.txt"
+SdFat sd;
+SdFile logFile;
 
 // K-Line Settings
 #define CS_KLINE A1
@@ -54,43 +54,40 @@ void setup() {
     SPI.begin();
     Serial.begin(115200);
 
-    /* SD */
-    /*
     pinMode(CS_SD, OUTPUT);
-    SD.begin(CS_SD);
-    if (!SD.exists("/db")) {
-        SD.mkdir("/db");
-    }*/
+    digitalWrite(CS_SD, HIGH);
+    pinMode(CS_GPS, OUTPUT);
+    digitalWrite(CS_GPS, HIGH);
+
+    /* SD */
+    Serial.println("Setting Pin LOW");
+    Serial.println(CS_SD);
+    digitalWrite(CS_SD, LOW);
+    if(! sd.begin(CS_SD, SPI_CLOCK_DIV32)) {
+        Serial.println("ERROR initializing SD.");
+    }
+    if (!sd.exists("/db")) {
+        sd.mkdir("/db");
+    }
+    if(! logFile.open(FILENAME_LOG, O_WRITE | O_CREAT | O_EXCL)) {
+        Serial.println("Error opening logfile.");
+    }
+    digitalWrite(CS_SD, HIGH);
+    for(int i = 0; i < 16; i++) {
+        SPI.transfer(0xff);
+    }
 
     /* GPS */
-    pinMode(10, OUTPUT);
-    pinMode(CS_GPS, OUTPUT);
     gpsSerial.begin(9600);
     gpsSerial.flush();
     gpsSerial.printAllRegisters();
 
     char configureGps[] = (
         "$PMTK251,9600*17\r\n"
-        "$PMTK314,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*2D\r\n"
+        "$PMTK314,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0*29\r\n"
     );
     for(uint8_t i = 0; i < sizeof(configureGps)/sizeof(configureGps[0]); i++) {
         gpsSerial.write(configureGps[i]);
-    }
-
-    unsigned int outputCount = 0;
-
-    while(1){
-        uint8_t bytesAvailable = gpsSerial.available();
-        if(bytesAvailable > 0) {
-            gpsSerial.printRegister(SC16IS750_REG_LCR);
-            Serial.print("Reading ");
-            Serial.print(bytesAvailable);
-            Serial.print(" bytes: ");
-            for(int i = 0; i < bytesAvailable; i++) {
-                Serial.print((char)gpsSerial.read());
-            }
-            Serial.println("");
-        }
     }
 
     /* Piezo */
@@ -101,16 +98,17 @@ void setup() {
 
 void updateLocation() {
     while(gpsSerial.available()) {
+        Serial.println(gpsSerial.available());
         byte value = gpsSerial.read();
-        Serial.print(value, HEX);
+        Serial.print(value);
         gps.encode(value);
     }
 }
 
 void logMessage(char* message) {
-    logFile.write(message);
-    logFile.write('\n');
+    logFile.println(message);
     logFile.flush();
+    logFile.close();
 }
 
 void updateVoltage() {
@@ -134,11 +132,21 @@ void powerOff() {
 void loop() {
     updateLocation();
 
+    digitalWrite(CS_SD, LOW);
+    char buf[8];
+    sprintf(buf, "%03i", gps.time.value());
+    logMessage(buf);
+    Serial.println(buf);
+    digitalWrite(CS_SD, HIGH);
+    for(int i = 0; i < 8; i++) {
+        SPI.transfer(0xff);
+    }
+    Serial.println("OK");
+
     /*
     updateVoltage();
     if(currentVoltage < 11.5) {
         powerOff();
     }*/
-    delay(1000);
 }
 

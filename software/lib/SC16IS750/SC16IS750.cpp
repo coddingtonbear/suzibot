@@ -42,28 +42,12 @@ SC16IS750::SC16IS750(
 void SC16IS750::begin(uint32_t baud)
 {
     SPI.beginTransaction(settings);
-    Serial.println("Initialization");
-    //printAllRegisters();
     digitalWrite(device_address_sspin, LOW);
-    Serial.println("SS LOW");
-    //printAllRegisters();
-    //ResetDevice();
-    //Serial.println("Device Reset");
-    //printAllRegisters();
     FIFOEnable(1);
-    Serial.println("FIFO Enabled");
-    //printAllRegisters();
     SetBaudrate(baud);
-    Serial.println("BaudRate Configured");
-    //printAllRegisters();
+    printAllRegisters();
     SetLine(8,0,1);
-    Serial.println("Line Configured");
-    //EnableTransmit(1);
-    //Serial.println("Tx Enabled");
-    //printAllRegisters();
     digitalWrite(device_address_sspin, HIGH);
-    Serial.println("SS High");
-    //printAllRegisters();
     SPI.endTransaction();
 }
 

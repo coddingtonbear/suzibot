@@ -110,7 +110,7 @@ Please keep the above information when you use this code in your project.
 
 //Application Related 
 
-#define     SC16IS750_DEBUG_PRINT   (0)
+//#define     SC16IS750_DEBUG_PRINT   (0)
 #define     SC16IS750_PROTOCOL_I2C  (0)
 #define     SC16IS750_PROTOCOL_SPI  (1)
 
