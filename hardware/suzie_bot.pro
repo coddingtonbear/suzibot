@@ -2,24 +2,24 @@ EAGLE AutoRouter Statistics:
 
 Job           : /Users/adamcoddington/Dropbox/Eagle/projects/SuzieBot/suzie_bot.brd
 
-Start at      : 00:22:56 (10/8/16)
-End at        : 00:25:25 (10/8/16)
-Elapsed time  : 00:02:27
+Start at      : 13:50:54 (10/8/16)
+End at        : 13:51:54 (10/8/16)
+Elapsed time  : 00:00:57
 
 Signals       :    38   RoutingGrid: 5.5 mil  Layers: 2
-Connections   :    77   predefined:  22 ( 0 Vias )
+Connections   :    78   predefined:  22 ( 0 Vias )
 
 Router memory :   2054816
 
 Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4 Optimize5 Optimize6 Optimize7 Optimize8 Optimize9Optimize10Optimize11Optimize12
 
-Time per pass     :  00:01:56  00:00:02  00:00:02  00:00:03  00:00:02  00:00:03  00:00:02  00:00:03  00:00:02  00:00:02  00:00:03  00:00:02  00:00:03  00:00:02
+Time per pass     :  00:00:17  00:00:00  00:00:05  00:00:04  00:00:04  00:00:04  00:00:03  00:00:04  00:00:04  00:00:03  00:00:02  00:00:03  00:00:02  00:00:02
 Number of Ripups  :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 max. Level        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 max. Total        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 
-Routed            :        35        55        55        55        55        55        55        55        55        55        55        55        55        55
-Vias              :         0         9        17         9         9         9         9         9         6         4         4         4         4         4
-Resolution        :    74.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
+Routed            :        53        55        56        56        56        56        56        56        56        56        56        56        56        56
+Vias              :         0         0         8         2         2         2         2         2         1         1         1         1         1         1
+Resolution        :    96.2 %    98.7 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
-Final             : 98.7% finished. Polygons may have fallen apart.
+Final             : 100.0% finished
