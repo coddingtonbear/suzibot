@@ -45,7 +45,6 @@ void SC16IS750::begin(uint32_t baud)
     digitalWrite(device_address_sspin, LOW);
     FIFOEnable(1);
     SetBaudrate(baud);
-    printAllRegisters();
     SetLine(8,0,1);
     digitalWrite(device_address_sspin, HIGH);
     SPI.endTransaction();
@@ -169,8 +168,6 @@ int16_t SC16IS750::SetBaudrate(uint32_t baudrate) //return error of baudrate par
     //write to DLH
     WriteRegister(SC16IS750_REG_DLH,(uint8_t)(divisor>>8));
     temp_lcr &= ~BIT_7;
-    printRegister(SC16IS750_REG_DLL);
-    printRegister(SC16IS750_REG_DLH);
     WriteRegister(SC16IS750_REG_LCR,temp_lcr);
 
 
@@ -512,32 +509,11 @@ uint8_t SC16IS750::ping()
     WriteRegister(SC16IS750_REG_SPR,0x55);
     byte firstResult = ReadRegister(SC16IS750_REG_SPR);
     if (firstResult !=0x55) {
-        Serial.print("Write error (0x55 expected):");
-        Serial.print(firstResult, HEX);
-        Serial.print(" ");
-        firstResult = ReadRegister(SC16IS750_REG_SPR);
-        Serial.print(firstResult, HEX);
-        firstResult = ReadRegister(SC16IS750_REG_SPR);
-        Serial.print(firstResult, HEX);
-        Serial.print(" ");
-        firstResult = ReadRegister(SC16IS750_REG_SPR);
-        Serial.println(firstResult, HEX);
         result = 0;
     }
     WriteRegister(SC16IS750_REG_SPR,0xAA);
     byte secondResult = ReadRegister(SC16IS750_REG_SPR);
     if (secondResult !=0xAA) {
-        Serial.print("Write error (0xAA expected):");
-        Serial.print(secondResult, HEX);
-        Serial.print(" ");
-        secondResult = ReadRegister(SC16IS750_REG_SPR);
-        Serial.print(secondResult, HEX);
-        Serial.print(" ");
-        secondResult = ReadRegister(SC16IS750_REG_SPR);
-        Serial.print(secondResult, HEX);
-        Serial.print(" ");
-        secondResult = ReadRegister(SC16IS750_REG_SPR);
-        Serial.println(secondResult, HEX);
         result = 0;
     }
 
