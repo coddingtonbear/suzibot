@@ -419,6 +419,7 @@ body 3.9 mm/JEDEC MS-012AA</description>
 <wire x1="6.35" y1="3.81" x2="6.35" y2="-6.35" width="0.127" layer="21"/>
 <wire x1="6.35" y1="-6.35" x2="-3.81" y2="-6.35" width="0.127" layer="21"/>
 <wire x1="-3.81" y1="-6.35" x2="-3.81" y2="3.81" width="0.127" layer="21"/>
+<text x="0.635" y="1.905" size="1.27" layer="25" rot="R270">L9637D</text>
 </package>
 </packages>
 <symbols>
@@ -1755,6 +1756,8 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <wire x1="6.35" y1="8.89" x2="6.35" y2="-8.89" width="0.127" layer="21"/>
 <wire x1="6.35" y1="-8.89" x2="-8.89" y2="-8.89" width="0.127" layer="21"/>
 <wire x1="-8.89" y1="-8.89" x2="-8.89" y2="8.89" width="0.127" layer="21"/>
+<text x="-1.27" y="-1.27" size="1.27" layer="25" align="bottom-center">POLOLU
+MINI</text>
 </package>
 </packages>
 <symbols>
@@ -1884,6 +1887,7 @@ Source: http://www.analog.com/UploadedFiles/Data_Sheets/39677768AD7714_c.pdf</de
 <wire x1="8.89" y1="-13.97" x2="-8.89" y2="-13.97" width="0.127" layer="21"/>
 <wire x1="-8.89" y1="-13.97" x2="-8.89" y2="16.51" width="0.127" layer="21"/>
 <pad name="P$1" x="-7.62" y="15.24" drill="0.8" shape="square"/>
+<text x="-0.635" y="5.08" size="1.27" layer="25" rot="SR270">SC16IS750</text>
 </package>
 <package name="TSSOP-28-ADAPTED">
 <pad name="P$1" x="-5.08" y="10.16" drill="0.8" shape="square"/>
@@ -1918,6 +1922,7 @@ Source: http://www.analog.com/UploadedFiles/Data_Sheets/39677768AD7714_c.pdf</de
 <wire x1="11.43" y1="11.43" x2="11.43" y2="-24.13" width="0.127" layer="21"/>
 <wire x1="11.43" y1="-24.13" x2="-6.35" y2="-24.13" width="0.127" layer="21"/>
 <wire x1="-6.35" y1="-24.13" x2="-6.35" y2="11.43" width="0.127" layer="21"/>
+<text x="1.905" y="-1.905" size="1.27" layer="25" rot="SR270">SC16IS752</text>
 </package>
 </packages>
 <symbols>
@@ -2134,8 +2139,8 @@ Source: http://www.analog.com/UploadedFiles/Data_Sheets/39677768AD7714_c.pdf</de
 <library name="randomjunk">
 <packages>
 <package name="2-PIN-TERMINAL">
-<pad name="P$1" x="2.54" y="0" drill="0.8"/>
-<pad name="P$2" x="-2.54" y="0" drill="0.8"/>
+<pad name="P$1" x="2.54" y="0" drill="1"/>
+<pad name="P$2" x="-2.54" y="0" drill="1"/>
 <wire x1="-4.445" y1="-3.81" x2="4.445" y2="-3.81" width="0.127" layer="21"/>
 <wire x1="5.08" y1="3.81" x2="5.08" y2="-3.81" width="0.127" layer="21"/>
 <wire x1="5.08" y1="-3.81" x2="4.445" y2="-3.81" width="0.127" layer="21"/>
@@ -2200,6 +2205,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="6.6675" y1="-1.27" x2="6.6675" y2="23.495" width="0.127" layer="21"/>
 <wire x1="6.6675" y1="23.495" x2="-11.7475" y2="23.495" width="0.127" layer="21"/>
 <wire x1="-11.7475" y1="23.495" x2="-11.7475" y2="-1.27" width="0.127" layer="21"/>
+<text x="-3.81" y="11.43" size="1.27" layer="25">μSD</text>
 </package>
 </packages>
 <symbols>
@@ -2253,6 +2259,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-6.35" y1="26.67" x2="-6.35" y2="-1.27" width="0.127" layer="21"/>
 <pad name="VCC" x="-2.54" y="20.32" drill="0.8"/>
 <pad name="GND" x="2.54" y="20.32" drill="0.8"/>
+<text x="1.905" y="12.065" size="1.27" layer="25" rot="R90" align="bottom-center">VOLTAGE
+SENSOR</text>
 </package>
 </packages>
 <symbols>
@@ -2298,41 +2306,41 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <vertex x="0" y="30.48"/>
 <vertex x="-5.08" y="30.48"/>
 </polygon>
-<pad name="RX" x="-5.08" y="0" drill="0.9" rot="R270"/>
-<pad name="P$6" x="-10.16" y="15.24" drill="0.9"/>
-<pad name="P$7" x="-12.7" y="15.24" drill="0.9"/>
-<pad name="P$8" x="-15.24" y="15.24" drill="0.9"/>
-<pad name="P$9" x="-17.78" y="15.24" drill="0.9"/>
-<pad name="P$10" x="-20.32" y="15.24" drill="0.9"/>
-<pad name="P$11" x="-22.86" y="15.24" drill="0.9"/>
-<pad name="P$12" x="-25.4" y="15.24" drill="0.9"/>
-<pad name="P$13" x="-27.94" y="15.24" drill="0.9"/>
-<pad name="P$14" x="-30.48" y="15.24" drill="0.9"/>
-<pad name="P$15" x="-33.02" y="15.24" drill="0.9"/>
-<pad name="P$16" x="-35.56" y="15.24" drill="0.9"/>
-<pad name="P$17" x="-38.1" y="15.24" drill="0.9"/>
-<pad name="RST" x="-48.26" y="-5.08" drill="0.9"/>
-<pad name="VCC" x="-45.72" y="-5.08" drill="0.9"/>
-<pad name="P$2" x="-43.18" y="-5.08" drill="0.9"/>
-<pad name="GND" x="-40.64" y="-5.08" drill="0.9"/>
-<pad name="P$19" x="-38.1" y="-5.08" drill="0.9"/>
-<pad name="P$20" x="-35.56" y="-5.08" drill="0.9"/>
-<pad name="P$21" x="-33.02" y="-5.08" drill="0.9"/>
-<pad name="P$22" x="-30.48" y="-5.08" drill="0.9"/>
-<pad name="ENABLE" x="-27.94" y="-5.08" drill="0.9"/>
-<pad name="P$24" x="-25.4" y="-5.08" drill="0.9"/>
-<pad name="P$25" x="-22.86" y="-5.08" drill="0.9"/>
-<pad name="P$26" x="-20.32" y="-5.08" drill="0.9"/>
-<pad name="P$27" x="-17.78" y="-5.08" drill="0.9"/>
-<pad name="TX-2" x="-15.24" y="-5.08" drill="0.9"/>
-<pad name="RX-2" x="-12.7" y="-5.08" drill="0.9"/>
-<pad name="P$30" x="-10.16" y="-5.08" drill="0.9"/>
-<pad name="TX" x="-7.62" y="0" drill="0.9"/>
-<text x="-54.61" y="17.78" size="1.27" layer="25">GPS WING</text>
-<wire x1="-3.81" y1="-6.35" x2="-3.81" y2="16.51" width="0.127" layer="21"/>
-<wire x1="-3.81" y1="16.51" x2="-54.61" y2="16.51" width="0.127" layer="21"/>
-<wire x1="-54.61" y1="16.51" x2="-54.61" y2="-6.35" width="0.127" layer="21"/>
-<wire x1="-54.61" y1="-6.35" x2="-3.81" y2="-6.35" width="0.127" layer="21"/>
+<pad name="RX" x="24.13" y="-5.08" drill="0.9" rot="R270"/>
+<pad name="P$6" x="19.05" y="10.16" drill="0.9"/>
+<pad name="P$7" x="16.51" y="10.16" drill="0.9"/>
+<pad name="P$8" x="13.97" y="10.16" drill="0.9"/>
+<pad name="P$9" x="11.43" y="10.16" drill="0.9"/>
+<pad name="P$10" x="8.89" y="10.16" drill="0.9"/>
+<pad name="P$11" x="6.35" y="10.16" drill="0.9"/>
+<pad name="P$12" x="3.81" y="10.16" drill="0.9"/>
+<pad name="P$13" x="1.27" y="10.16" drill="0.9"/>
+<pad name="P$14" x="-1.27" y="10.16" drill="0.9"/>
+<pad name="P$15" x="-3.81" y="10.16" drill="0.9"/>
+<pad name="P$16" x="-6.35" y="10.16" drill="0.9"/>
+<pad name="P$17" x="-8.89" y="10.16" drill="0.9"/>
+<pad name="RST" x="-19.05" y="-10.16" drill="0.9"/>
+<pad name="VCC" x="-16.51" y="-10.16" drill="0.9"/>
+<pad name="P$2" x="-13.97" y="-10.16" drill="0.9"/>
+<pad name="GND" x="-11.43" y="-10.16" drill="0.9"/>
+<pad name="P$19" x="-8.89" y="-10.16" drill="0.9"/>
+<pad name="P$20" x="-6.35" y="-10.16" drill="0.9"/>
+<pad name="P$21" x="-3.81" y="-10.16" drill="0.9"/>
+<pad name="P$22" x="-1.27" y="-10.16" drill="0.9"/>
+<pad name="ENABLE" x="1.27" y="-10.16" drill="0.9"/>
+<pad name="P$24" x="3.81" y="-10.16" drill="0.9"/>
+<pad name="P$25" x="6.35" y="-10.16" drill="0.9"/>
+<pad name="P$26" x="8.89" y="-10.16" drill="0.9"/>
+<pad name="P$27" x="11.43" y="-10.16" drill="0.9"/>
+<pad name="TX-2" x="13.97" y="-10.16" drill="0.9"/>
+<pad name="RX-2" x="16.51" y="-10.16" drill="0.9"/>
+<pad name="P$30" x="19.05" y="-10.16" drill="0.9"/>
+<pad name="TX" x="21.59" y="-5.08" drill="0.9"/>
+<text x="-24.13" y="8.89" size="1.27" layer="25">GPS WING</text>
+<wire x1="25.4" y1="-11.43" x2="25.4" y2="11.43" width="0.127" layer="21"/>
+<wire x1="25.4" y1="11.43" x2="-25.4" y2="11.43" width="0.127" layer="21"/>
+<wire x1="-25.4" y1="11.43" x2="-25.4" y2="-11.43" width="0.127" layer="21"/>
+<wire x1="-25.4" y1="-11.43" x2="25.4" y2="-11.43" width="0.127" layer="21"/>
 </package>
 </packages>
 <symbols>
@@ -2373,9 +2381,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <library name="tdk">
 <packages>
 <package name="17MM-PIEZO">
-<pad name="P$1" x="-5.705475" y="0" drill="0.8"/>
-<pad name="P$2" x="3.324225" y="0" drill="0.8"/>
+<pad name="P$1" x="-5.705475" y="0" drill="0.7"/>
+<pad name="P$2" x="3.324225" y="0" drill="0.7"/>
 <circle x="-1" y="0" radius="8.514690625" width="0.127" layer="21"/>
+<text x="0" y="-2.54" size="1.27" layer="25" rot="R90">PIEZO</text>
 </package>
 </packages>
 <symbols>
@@ -2726,14 +2735,12 @@ https://www.sparkfun.com/products/8745</description>
 <wire x1="17.78" y1="152.4" x2="53.34" y2="116.84" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$33" class="0">
+<net name="CS-GPSWIFI" class="0">
 <segment>
 <pinref part="U$2" gate="G$1" pin="AO/CS"/>
-<wire x1="-88.9" y1="88.9" x2="-30.48" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="-30.48" y1="147.32" x2="-27.94" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="-27.94" y1="147.32" x2="-20.32" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="-88.9" y1="88.9" x2="-22.86" y2="154.94" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$1" pin="D3"/>
-<wire x1="-20.32" y1="154.94" x2="-17.78" y2="154.94" width="0.1524" layer="91"/>
+<wire x1="-22.86" y1="154.94" x2="-17.78" y2="154.94" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="CS-MICROSD" class="0">
@@ -2773,14 +2780,12 @@ https://www.sparkfun.com/products/8745</description>
 </net>
 <net name="N$36" class="0">
 <segment>
-<wire x1="-22.86" y1="144.78" x2="-22.86" y2="200.66" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="200.66" x2="-33.02" y2="210.82" width="0.1524" layer="91"/>
 <pinref part="U$11" gate="G$1" pin="P$2"/>
-<wire x1="-33.02" y1="210.82" x2="-38.1" y2="210.82" width="0.1524" layer="91"/>
 <wire x1="-38.1" y1="210.82" x2="-45.72" y2="218.44" width="0.1524" layer="91"/>
-<wire x1="-22.86" y1="144.78" x2="-20.32" y2="142.24" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$1" pin="D8"/>
-<wire x1="-20.32" y1="142.24" x2="-17.78" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="210.82" x2="-38.1" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="-38.1" y1="149.86" x2="-30.48" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="142.24" x2="-17.78" y2="142.24" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="MOSI" class="0">
@@ -2832,12 +2837,13 @@ https://www.sparkfun.com/products/8745</description>
 </net>
 <net name="N$4" class="0">
 <segment>
-<wire x1="-71.12" y1="165.1" x2="-73.66" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="U$3" gate="G$1" pin="CH_PD"/>
-<wire x1="-73.66" y1="167.64" x2="-88.9" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="U$2" gate="G$1" pin="GPIO7/RIA"/>
-<wire x1="-71.12" y1="165.1" x2="-71.12" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="-71.12" y1="157.48" x2="-71.12" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="-71.12" y1="78.74" x2="-81.28" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="-88.9" y1="167.64" x2="-86.36" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="-86.36" y1="165.1" x2="-78.74" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="-78.74" y1="165.1" x2="-71.12" y2="157.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -3061,7 +3067,8 @@ https://www.sparkfun.com/products/8745</description>
 <junction x="-144.78" y="195.58"/>
 <wire x1="83.82" y1="144.78" x2="78.74" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="U$7" gate="G$1" pin="VSS"/>
-<wire x1="116.84" y1="144.78" x2="83.82" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="144.78" x2="93.98" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="93.98" y1="144.78" x2="83.82" y2="144.78" width="0.1524" layer="91"/>
 <wire x1="78.74" y1="149.86" x2="78.74" y2="185.42" width="0.1524" layer="91"/>
 <junction x="78.74" y="195.58"/>
 <wire x1="78.74" y1="185.42" x2="78.74" y2="195.58" width="0.1524" layer="91"/>
@@ -3100,6 +3107,14 @@ https://www.sparkfun.com/products/8745</description>
 <junction x="149.86" y="195.58"/>
 <pinref part="5V/GND" gate="G$1" pin="P$2"/>
 <wire x1="160.02" y1="205.74" x2="160.02" y2="299.72" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="I2C/SPI"/>
+<wire x1="116.84" y1="132.08" x2="106.68" y2="132.08" width="0.1524" layer="91"/>
+<wire x1="106.68" y1="132.08" x2="93.98" y2="144.78" width="0.1524" layer="91"/>
+<junction x="93.98" y="144.78"/>
+<pinref part="U$2" gate="G$1" pin="I2C/SPI"/>
+<wire x1="-129.54" y1="53.34" x2="-139.7" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="-139.7" y1="53.34" x2="-152.4" y2="66.04" width="0.1524" layer="91"/>
+<junction x="-152.4" y="66.04"/>
 </segment>
 </net>
 <net name="EXTGND" class="1">
@@ -3160,6 +3175,19 @@ https://www.sparkfun.com/products/8745</description>
 </nets>
 </sheet>
 </sheets>
+<errors>
+<approved hash="104,1,144.78,269.24,IC2,VS,12V-OUT,,,"/>
+<approved hash="104,1,144.78,248.92,IC2,VCC,5V,,,"/>
+<approved hash="104,1,127,248.92,IC2,GND,EXTGND,,,"/>
+<approved hash="113,1,-105.41,167.492,U$3,,,,,"/>
+<approved hash="113,1,222.441,142.685,U$9,,,,,"/>
+</errors>
 </schematic>
 </drawing>
+<compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
+</compatibility>
 </eagle>
