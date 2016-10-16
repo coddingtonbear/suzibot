@@ -1,6 +1,9 @@
 software/.pioenvs/
 hardware/suzie_bot.b#*
 hardware/suzie_bot.s#*
+hardware/suzie_bot_*.brd
+hardware/suzie_bot_*.job
+hardware/suzie_bot_*.pro
 software/*.lck
 software/.piolibdeps/*
 *.lck
