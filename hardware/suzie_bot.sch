@@ -5932,8 +5932,6 @@ http://dangerousprototypes.com</description>
 <net name="12V-OUT" class="1">
 <segment>
 <pinref part="U$4" gate="G$1" pin="VOUT"/>
-<wire x1="73.66" y1="264.16" x2="73.66" y2="261.62" width="0.1524" layer="91"/>
-<wire x1="73.66" y1="259.08" x2="73.66" y2="256.54" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="256.54" x2="76.2" y2="254" width="0.1524" layer="91"/>
 <wire x1="76.2" y1="254" x2="88.9" y2="254" width="0.1524" layer="91"/>
 <wire x1="88.9" y1="254" x2="104.14" y2="269.24" width="0.1524" layer="91"/>
@@ -5953,9 +5951,11 @@ http://dangerousprototypes.com</description>
 <wire x1="96.52" y1="236.22" x2="93.98" y2="238.76" width="0.1524" layer="91"/>
 <wire x1="93.98" y1="254" x2="93.98" y2="238.76" width="0.1524" layer="91"/>
 <junction x="93.98" y="254"/>
+<wire x1="73.66" y1="256.54" x2="73.66" y2="261.62" width="0.1524" layer="91"/>
 <pinref part="U$4" gate="G$1" pin="VOUT1"/>
-<wire x1="73.66" y1="259.08" x2="73.66" y2="261.62" width="0.1524" layer="91"/>
-<wire x1="73.66" y1="261.62" x2="76.2" y2="264.16" width="0.1524" layer="91"/>
+<wire x1="73.66" y1="261.62" x2="73.66" y2="264.16" width="0.1524" layer="91"/>
+<wire x1="76.2" y1="264.16" x2="73.66" y2="261.62" width="0.1524" layer="91"/>
+<junction x="73.66" y="261.62"/>
 </segment>
 </net>
 <net name="POWERON" class="1">
