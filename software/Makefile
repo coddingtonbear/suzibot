@@ -17,4 +17,4 @@ update:
 	    platformio -f -c vim update
 
 monitor:
-	    platformio device monitor --port=/dev/cu.wchusbserial141130 --baud=115200
+	    platformio device monitor --baud=1000000 --raw

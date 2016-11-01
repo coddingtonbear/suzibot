@@ -125,7 +125,7 @@ class SC16IS750 : public Stream
             uint8_t chan = SC16IS750_CHAN_A,
             unsigned long crystal_frequency = 1843200UL
         );
-        void begin(uint32_t baud);                               
+        void begin(uint32_t baud=NULL, bool reset=false);
         int read();
         size_t write(uint8_t val);
         int available();
@@ -150,14 +150,17 @@ class SC16IS750 : public Stream
         void    writeBytes(uint8_t bytes[], uint8_t size);
         void    GPIOSetPinMode(uint8_t pin_number, uint8_t i_o);
         void    GPIOSetPinState(uint8_t pin_number, uint8_t pin_state);
+        void    FIFOReset();
         
     
     private:
         unsigned long crystal_frequency;
+        uint32_t _baud;
         uint8_t channel;
         uint8_t device_address_sspin;
         uint8_t protocol;
         uint8_t transfer(uint8_t byte);
+        void    printByteVerbose(uint8_t byte);
         void    BeginTransaction();
         void    EndTransaction();
 	//	uint32_t timeout;
@@ -169,11 +172,8 @@ class SC16IS750 : public Stream
         void    GPIOSetPortState(uint8_t port_state);
         void    ResetDevice(void);
         
-        
-        
         void    __isr(void);
         void    FIFOEnable(uint8_t fifo_enable);
-        void    FIFOReset(uint8_t rx_fifo);
         void    FIFOSetTriggerLevel(uint8_t rx_fifo, uint8_t length);
         uint8_t FIFOAvailableData(void);
         uint8_t FIFOAvailableSpace(void);

@@ -39,13 +39,22 @@ SC16IS750::SC16IS750(
 }
 
 
-void SC16IS750::begin(uint32_t baud)
+void SC16IS750::begin(uint32_t baud, bool reset)
 {
+    if (baud == NULL) {
+        baud = _baud;
+    }
+    _baud = baud;
+
     SPI.beginTransaction(settings);
     digitalWrite(device_address_sspin, LOW);
+    if (reset) {
+        ResetDevice();
+    }
     FIFOEnable(1);
     SetBaudrate(baud);
     SetLine(8,0,1);
+    FIFOReset();
     digitalWrite(device_address_sspin, HIGH);
     SPI.endTransaction();
 }
@@ -73,10 +82,15 @@ uint8_t* SC16IS750::readAll() {
 uint8_t SC16IS750::transfer(uint8_t byte) {
     uint8_t result = SPI.transfer(byte);
 
-    //Serial.print(byte);
-    //Serial.println(">> ");
-    //Serial.print("<< ");
-    //Serial.println(result);
+#ifdef  SC16IS750_DEBUG_PRINT
+    Serial.print("TX: ");
+    printByteVerbose(byte);
+    Serial.println();
+
+    Serial.print("RX: ");
+    printByteVerbose(result);
+    Serial.println();
+#endif
 
     return result;
 }
@@ -116,10 +130,16 @@ uint8_t SC16IS750::ReadRegister(uint8_t reg_addr)
     SPI.beginTransaction(settings);
     digitalWrite(device_address_sspin, LOW);
     //delayMicroseconds(10);
+#ifdef  SC16IS750_DEBUG_PRINT
+    Serial.print("//: ");
+    Serial.print(channel);
+    Serial.print(" Read from ");
+    Serial.println(reg_addr, HEX);
+#endif
 
-    // BIT   [7]: R/W (1=read, 0=write)
+    // BIT   [8]: R/W (2=read, 0=write)
     // BIT [6:3]: Register ID
-    // BIT [2:1]: Channel (00=A, 01=B)
+    // BIT [2:1]: Channel (01=A, 01=B)
     // BIT   [0]: Not Used
     transfer(BIT_7 | (reg_addr<<3) | (channel << 1));
     result = transfer(0xff);
@@ -136,6 +156,14 @@ void SC16IS750::WriteRegister(uint8_t reg_addr, uint8_t val)
     SPI.beginTransaction(settings);
     digitalWrite(device_address_sspin, LOW);
     //delayMicroseconds(10);
+#ifdef  SC16IS750_DEBUG_PRINT
+    Serial.print("//: ");
+    Serial.print(channel);
+    Serial.print(" Write to ");
+    Serial.print(reg_addr, HEX);
+    Serial.print("; value: ");
+    Serial.println(val, HEX);
+#endif
 
     // BIT   [7]: R/W (1=read, 0=write)
     // BIT [6:3]: Register ID
@@ -314,6 +342,8 @@ void SC16IS750::ResetDevice(void)
     reg |= 0x08;
     WriteRegister(SC16IS750_REG_IOCONTROL, reg);
 
+    delayMicroseconds(3);
+
     uint8_t ioctlValue = ReadRegister(SC16IS750_REG_IOCONTROL);
     for(
         int i = 0;
@@ -322,8 +352,10 @@ void SC16IS750::ResetDevice(void)
     ) {
         delay(1000);
         ioctlValue = ReadRegister(SC16IS750_REG_IOCONTROL);
+
+        delayMicroseconds(1);
     }
-    if (!(ioctlValue & ~0x08)) {
+    if (ioctlValue & ~0x08) {
         Serial.println("ERROR while resetting UART.");
     }
 
@@ -417,21 +449,17 @@ void SC16IS750::FIFOEnable(uint8_t fifo_enable)
     return;
 }
 
-void SC16IS750::FIFOReset(uint8_t rx_fifo)
+void SC16IS750::FIFOReset()
 {
      uint8_t temp_fcr;
 
     temp_fcr = ReadRegister(SC16IS750_REG_FCR);
 
-    if (rx_fifo == 0){
-        temp_fcr |= 0x04;
-    } else {
-        temp_fcr |= 0x02;
-    }
+    temp_fcr |= 0x04;
+    temp_fcr |= 0x02;
     WriteRegister(SC16IS750_REG_FCR,temp_fcr);
 
     return;
-
 }
 
 void SC16IS750::FIFOSetTriggerLevel(uint8_t rx_fifo, uint8_t length)
@@ -476,14 +504,8 @@ void SC16IS750::WriteByte(uint8_t val)
 int SC16IS750::ReadByte(void)
 {
     volatile uint8_t val;
-    if (FIFOAvailableData() == 0) {
-        return -1;
-    } else {
-      val = ReadRegister(SC16IS750_REG_RHR);
-      return val;
-    }
-
-
+    val = ReadRegister(SC16IS750_REG_RHR);
+    return val;
 }
 
 void SC16IS750::EnableTransmit(uint8_t tx_enable)
@@ -586,10 +608,7 @@ int SC16IS750:: peek()
     return peek_buf;
 }
 
-void SC16IS750::printRegister(uint8_t registerId) {
-    Serial.print(registerId, HEX);
-    Serial.print(": 0x");
-    uint8_t reading = ReadRegister(registerId);
+void SC16IS750::printByteVerbose(uint8_t reading) {
     if(reading < pow(2, 4)) {
         Serial.print("0");
     }
@@ -602,7 +621,15 @@ void SC16IS750::printRegister(uint8_t registerId) {
     }
     Serial.print(reading, BIN);
     Serial.print(" ");
-    Serial.println((int)reading);
+    Serial.print((int)reading);
+}
+
+void SC16IS750::printRegister(uint8_t registerId) {
+    Serial.print(registerId, HEX);
+    Serial.print(": 0x");
+    uint8_t reading = ReadRegister(registerId);
+    printByteVerbose(reading);
+    Serial.println();
 }
 
 void SC16IS750::printRegisters(uint8_t registers[], uint8_t size) {
