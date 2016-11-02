@@ -25,6 +25,8 @@
 
 #include <SC16IS750.h>
 
+//#define     ESP8266_DEBUG_PRINT   (0)
+
 
 /**
  * Provide an easy-to-use way to manipulate ESP8266. 
@@ -40,7 +42,7 @@ class ESP8266 {
      *
      * @warning parameter baud depends on the AT firmware. 9600 is an common value. 
      */
-    ESP8266(SC16IS750 &uart, uint32_t baud = 9600);
+    ESP8266(SC16IS750 &uart);
     
     
     /** 
@@ -53,7 +55,7 @@ class ESP8266 {
      */
     bool kick(void);
 
-    bool begin(void);
+    void begin(void);
     
     /**
      * Restart ESP8266 by "AT+RST". 

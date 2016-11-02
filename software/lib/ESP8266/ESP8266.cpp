@@ -41,11 +41,11 @@
         }\
     } while(0)
 
-ESP8266::ESP8266(SC16IS750 &uart, uint32_t baud): m_puart(&uart)
+ESP8266::ESP8266(SC16IS750 &uart): m_puart(&uart)
 {
 }
 
-bool ESP8266::begin(void) {
+void ESP8266::begin(void) {
     rx_empty();
 }
 
@@ -378,6 +378,9 @@ String ESP8266::recvString(String target, uint32_t timeout)
     while (millis() - start < timeout) {
         while(m_puart->available() > 0) {
             a = m_puart->read();
+#ifdef  ESP8266_DEBUG_PRINT
+            Serial.print(a);
+#endif
 			if(a == '\0') continue;
             data += a;
         }
@@ -396,6 +399,9 @@ String ESP8266::recvString(String target1, String target2, uint32_t timeout)
     while (millis() - start < timeout) {
         while(m_puart->available() > 0) {
             a = m_puart->read();
+#ifdef  ESP8266_DEBUG_PRINT
+            Serial.print(a);
+#endif
 			if(a == '\0') continue;
             data += a;
         }
@@ -416,6 +422,9 @@ String ESP8266::recvString(String target1, String target2, String target3, uint3
     while (millis() - start < timeout) {
         while(m_puart->available() > 0) {
             a = m_puart->read();
+#ifdef  ESP8266_DEBUG_PRINT
+            Serial.print(a);
+#endif
 			if(a == '\0') continue;
             data += a;
         }
@@ -475,7 +484,7 @@ bool ESP8266::eATGMR(String &version)
 {
     rx_empty();
     m_puart->println("AT+GMR");
-    return recvFindAndFilter("OK", "\r\r\n", "\r\n\r\nOK", version); 
+    return recvFindAndFilter("OK", "\r\n", "\r\nOK", version); 
 }
 
 bool ESP8266::qATCWMODE(uint8_t *mode) 
