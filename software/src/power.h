@@ -1,8 +1,9 @@
-#include "Arduino.h"
+#include <Arduino.h>
+#include "service.h"
 
 // Power Management Settings
 
-class PowerManager
+class PowerManager: public StandardService
 {
     public:
         PowerManager(

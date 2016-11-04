@@ -33,21 +33,21 @@ SC16IS750 gps_serial = SC16IS750(
     SC16IS750_CHAN_A,
     14745600UL
 );
-GpsManager gps_mgr = GpsManager(gps_serial, DISABLE_GPS);
+GpsManager gps_mgr = GpsManager(gps_serial, 9600, DISABLE_GPS);
 
 SC16IS750 wifi_serial = SC16IS750(
     CS_WIFI,
     SC16IS750_CHAN_B,
     14745600UL
 );
-WifiManager wifi_mgr = WifiManager(wifi_serial);
+WifiManager wifi_mgr = WifiManager(wifi_serial, 9600);
 
 SC16IS750 kLine_serial = SC16IS750(
     CS_KLINE,
     SC16IS750_CHAN_A,
     6000000UL
 );
-KLineManager kline_mgr = KLineManager(kLine_serial);
+KLineManager kline_mgr = KLineManager(kLine_serial, 10400);
 
 void bridgeSerial(SC16IS750& serial, bool send = true) {
     while (serial.available()) {
@@ -82,15 +82,15 @@ void setup() {
 
     /* K-Line */
     Serial.println("Initializing K-Line...");
-    kline_mgr.begin(10400);
+    kline_mgr.begin();
 
     /* WIFI */
     Serial.println("Initializing WIFI...");
-    wifi_mgr.begin(9600);
+    wifi_mgr.begin();
 
     /* GPS */
     Serial.println("Initializing GPS...");
-    gps_mgr.begin(9600);
+    gps_mgr.begin();
 
     Serial.println("Ready.");
 }

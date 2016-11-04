@@ -1,9 +1,10 @@
 #include "gps.h"
 
 
-GpsManager::GpsManager(SC16IS750& serial_port, uint8_t disable_gps_pin) {
+GpsManager::GpsManager(SC16IS750& serial_port, uint16_t baud_rate, uint8_t disable_gps_pin) {
     port = serial_port;
     disable_gps = disable_gps_pin;
+    baud = baud_rate;
 
     pinMode(disable_gps_pin, OUTPUT);
     digitalWrite(disable_gps_pin, LOW);
@@ -17,7 +18,7 @@ void GpsManager::enable() {
     digitalWrite(disable_gps, LOW);
 }
 
-void GpsManager::begin(uint16_t baud) {
+void GpsManager::begin() {
     port.begin(9600);
     if(! port.ping()) {
         Serial.println("ERROR initializing GPS.");

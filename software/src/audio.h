@@ -1,12 +1,13 @@
-#include "Arduino.h"
+#include <Arduino.h>
 #include "pitches.h"
+#include "service.h"
 
 const int STARTUP[] = {NOTE_C4, NOTE_E4, NOTE_E4};
 const int SHUTDOWN[] = {NOTE_E4, NOTE_C4, NOTE_C4};
 const int CONNECTED[] = {NOTE_C4, NOTE_D4, NOTE_E4};
 const int ERROR[] = {NOTE_A4, NOTE_A4, NOTE_A4};
 
-class AudioManager
+class AudioManager: public StandardService
 {
     public:
         AudioManager(uint8_t pin_no);

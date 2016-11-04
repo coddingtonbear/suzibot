@@ -1,9 +1,10 @@
-#include <SD.h>
 #include <Arduino.h>
+#include <SD.h>
+#include "service.h"
 
 #define FILENAME_LOG "log.txt"
 
-class SDCardManager
+class SDCardManager: public StandardService
 {
     public:
         SDCardManager(
