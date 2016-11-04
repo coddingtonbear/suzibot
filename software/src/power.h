@@ -1,11 +1,26 @@
 #include "Arduino.h"
 
 // Power Management Settings
-#define ENABLE_LEVEL_CONVERTER 15
-#define RX_VOLTAGE A7
-#define TX_POWER_OFF 22
 
-void powerOff();
-uint8_t read12v();
-long read5v();
-void updateVoltage12v();
+class PowerManager
+{
+    public:
+        PowerManager(
+            uint8_t level_converter_pin_no,
+            uint8_t voltage_12v_pin_no,
+            uint8_t power_off_pin_no
+        );
+        void begin();
+        void cycle();
+        void powerOff();
+        uint8_t read12v();
+        long read5v();
+    private:
+        void updateVoltage12v();
+
+        uint8_t level_converter_pin;
+        uint8_t voltage_12v_pin;
+        uint8_t power_off_pin;
+        uint8_t voltage_12v;
+        long voltage_5v;
+};

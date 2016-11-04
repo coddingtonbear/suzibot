@@ -125,7 +125,7 @@ class SC16IS750 : public Stream
             uint8_t chan = SC16IS750_CHAN_A,
             unsigned long crystal_frequency = 1843200UL
         );
-        void begin(uint32_t baud=NULL, bool reset=false);
+        void begin(uint32_t baud=0, bool reset=false);
         int read();
         size_t write(uint8_t val);
         int available();
@@ -146,7 +146,6 @@ class SC16IS750 : public Stream
         void    printRegister(uint8_t registerId);
         void    printRegisters(uint8_t registers[], uint8_t size);
 
-        uint8_t* readAll();
         void    writeBytes(uint8_t bytes[], uint8_t size);
         void    GPIOSetPinMode(uint8_t pin_number, uint8_t i_o);
         void    GPIOSetPinState(uint8_t pin_number, uint8_t pin_state);

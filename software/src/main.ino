@@ -1,3 +1,4 @@
+#include <SC16IS750.h>
 #include <SPI.h>
 #include "audio.h"
 #include "gps.h"
@@ -6,8 +7,47 @@
 #include "wifi.h"
 #include "power.h"
 
-// Notification Settings
 #define LED 1
+#define PIEZO 0
+
+#define DISABLE_GPS 2
+#define ENABLE_LEVEL_CONVERTER 15
+#define RX_VOLTAGE A7
+#define TX_POWER_OFF 22
+
+#define CS_SD 4
+#define CS_KLINE 23
+#define CS_WIFI 3
+#define CS_GPS 3
+
+AudioManager audio_mgr = AudioManager(PIEZO);
+SDCardManager sd_mgr = SDCardManager(CS_SD);
+PowerManager power_mgr = PowerManager(
+    ENABLE_LEVEL_CONVERTER,
+    RX_VOLTAGE,
+    TX_POWER_OFF
+);
+
+SC16IS750 gps_serial = SC16IS750(
+    CS_GPS,
+    SC16IS750_CHAN_A,
+    14745600UL
+);
+GpsManager gps_mgr = GpsManager(gps_serial, DISABLE_GPS);
+
+SC16IS750 wifi_serial = SC16IS750(
+    CS_WIFI,
+    SC16IS750_CHAN_B,
+    14745600UL
+);
+WifiManager wifi_mgr = WifiManager(wifi_serial);
+
+SC16IS750 kLine_serial = SC16IS750(
+    CS_KLINE,
+    SC16IS750_CHAN_A,
+    6000000UL
+);
+KLineManager kline_mgr = KLineManager(kLine_serial);
 
 void bridgeSerial(SC16IS750& serial, bool send = true) {
     while (serial.available()) {
@@ -22,58 +62,50 @@ void bridgeSerial(SC16IS750& serial, bool send = true) {
 }
 
 void setup() {
-    pinMode(ENABLE_LEVEL_CONVERTER, OUTPUT);
-    pinMode(CS_SD, OUTPUT);
-    pinMode(CS_GPS, OUTPUT);
-    pinMode(DISABLE_GPS, OUTPUT);
-    pinMode(CS_WIFI, OUTPUT);
-    pinMode(CS_KLINE, OUTPUT);
-    pinMode(PIEZO, OUTPUT);
-    pinMode(RX_VOLTAGE, INPUT);
-    pinMode(TX_POWER_OFF, OUTPUT);
-
     pinMode(LED, OUTPUT);
-
     digitalWrite(LED, HIGH);
-    digitalWrite(ENABLE_LEVEL_CONVERTER, HIGH);
-    digitalWrite(CS_SD, HIGH);
-    digitalWrite(CS_GPS, HIGH);
-    digitalWrite(DISABLE_GPS, LOW);
-    digitalWrite(CS_WIFI, HIGH);
-    digitalWrite(CS_KLINE, HIGH);
-    digitalWrite(TX_POWER_OFF, LOW);
 
     SPI.begin();
     Serial.begin(1000000);
 
+    /* Audio */
+    Serial.println("Initializing Audio...");
+    audio_mgr.begin();
+
+    /* Power Management */
+    Serial.println("Initializing Power Manager...");
+    power_mgr.begin();
+
     /* SD */
     Serial.println("Initializing SD...");
-    initSdCard();
+    sd_mgr.begin();
 
     /* K-Line */
     Serial.println("Initializing K-Line...");
-    initKline();
+    kline_mgr.begin(10400);
 
     /* WIFI */
     Serial.println("Initializing WIFI...");
-    initWifi();
+    wifi_mgr.begin(9600);
 
     /* GPS */
     Serial.println("Initializing GPS...");
-    initGps();
+    gps_mgr.begin(9600);
 
-    //playNotes(STARTUP, sizeof(STARTUP));
     Serial.println("Ready.");
 }
 
 void loop() {
-    updateLocation();
-    //updateVoltage();
+    wifi_mgr.cycle();
+    kline_mgr.cycle();
+    gps_mgr.cycle();
+    sd_mgr.cycle();
+    audio_mgr.cycle();
+    power_mgr.cycle();
+
     //wifiSerial.flush();
     //bridgeSerial(wifiSerial);
     //bridgeSerial(gpsSerial, false);
-
-    //Serial.println(getWifi().getAPList());
 
     /*
      * LOGGING

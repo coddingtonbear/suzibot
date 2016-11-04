@@ -1,35 +1,54 @@
 #include "power.h"
 
 
-double voltage12v = 0;
-double voltage5v = 0;
+PowerManager::PowerManager(
+    uint8_t level_converter_pin_no,
+    uint8_t voltage_12v_pin_no,
+    uint8_t power_off_pin_no
+) {
+    level_converter_pin = level_converter_pin_no;
+    pinMode(level_converter_pin, OUTPUT);
+    digitalWrite(level_converter_pin, HIGH);
 
+    voltage_12v_pin = voltage_12v_pin_no;
+    pinMode(voltage_12v_pin, INPUT);
 
-void powerOff() {
-    digitalWrite(TX_POWER_OFF, true);
+    power_off_pin = power_off_pin_no;
+    pinMode(power_off_pin, OUTPUT);
+    digitalWrite(power_off_pin, LOW);
+}
+
+void PowerManager::begin() {
+}
+
+void PowerManager::cycle() {
+    updateVoltage12v();
+}
+
+void PowerManager::powerOff() {
+    digitalWrite(power_off_pin, true);
 }
 
 
-uint8_t read12v() {
-    return analogRead(RX_VOLTAGE);
+uint8_t PowerManager::read12v() {
+    return analogRead(voltage_12v_pin);
 }
 
 
-void updateVoltage12v() {
+void PowerManager::updateVoltage12v() {
     const int sampleCount = 5;
     int value = read12v();
     double voltage = (double)value / (double)43;
 
-    if (voltage12v > 0) {
-        voltage12v -= voltage12v / sampleCount;
-        voltage12v += voltage / sampleCount;
+    if (voltage_12v > 0) {
+        voltage_12v -= voltage_12v / sampleCount;
+        voltage_12v += voltage / sampleCount;
     } else {
-        voltage12v = voltage;
+        voltage_12v = voltage;
     }
 }
 
-
-long read5v() {
+long PowerManager::read5v() {
     // Read 1.1V reference against AVcc
     // set the reference to Vcc and the measurement to the internal 1.1V reference
     ADMUX = _BV(REFS0) | _BV(MUX4) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);

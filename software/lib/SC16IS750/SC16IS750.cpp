@@ -35,13 +35,15 @@ SC16IS750::SC16IS750(
     crystal_frequency = crystal_freq;
     channel = chan;
     device_address_sspin = addr_sspin;
+
     pinMode(device_address_sspin, OUTPUT);
+    digitalWrite(device_address_sspin, HIGH);
 }
 
 
 void SC16IS750::begin(uint32_t baud, bool reset)
 {
-    if (baud == NULL) {
+    if (baud == 0) {
         baud = _baud;
     }
     _baud = baud;
@@ -57,26 +59,6 @@ void SC16IS750::begin(uint32_t baud, bool reset)
     FIFOReset();
     digitalWrite(device_address_sspin, HIGH);
     SPI.endTransaction();
-}
-
-uint8_t* SC16IS750::readAll() {
-    uint8_t count = ReadRegister(SC16IS750_REG_TXLVL);
-    uint8_t chars[count + 1];
-
-    SPI.beginTransaction(settings);
-    digitalWrite(device_address_sspin, LOW);
-
-    transfer(BIT_7 | (channel << 1));
-
-    chars[0] = count;
-    for(uint8_t i = 0; i < count; i++) {
-        chars[i+1] = transfer(0x00);
-    }
-
-    digitalWrite(device_address_sspin, HIGH);
-    SPI.endTransaction();
-
-    return chars;
 }
 
 uint8_t SC16IS750::transfer(uint8_t byte) {

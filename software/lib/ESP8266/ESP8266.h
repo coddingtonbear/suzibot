@@ -43,6 +43,7 @@ class ESP8266 {
      * @warning parameter baud depends on the AT firmware. 9600 is an common value. 
      */
     ESP8266(SC16IS750 &uart);
+    ESP8266();
     
     
     /** 

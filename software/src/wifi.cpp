@@ -1,23 +1,19 @@
 #include "wifi.h"
 
 
-SC16IS750 wifiSerial = SC16IS750(
-    CS_WIFI,
-    SC16IS750_CHAN_B,
-    14745600UL
-);
-ESP8266 wifi = ESP8266(wifiSerial);
+WifiManager::WifiManager(SC16IS750& serial_port) {
+    port = serial_port;
+    wifi = ESP8266(port);
+}
 
-
-void initWifi() {
-    wifiSerial.begin(9600);
-    if(! wifiSerial.ping()) {
+void WifiManager::begin(uint16_t baud) {
+    port.begin(baud);
+    if(! port.ping()) {
         Serial.println("ERROR initializing WIFI.");
     } else {
         wifi.begin();
     }
 }
 
-ESP8266 getWifi() {
-    return wifi;
+void WifiManager::cycle() {
 }

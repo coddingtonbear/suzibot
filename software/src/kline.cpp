@@ -1,16 +1,17 @@
 #include "kline.h"
 
 
-SC16IS750 klineSerial = SC16IS750(
-    CS_KLINE,
-    SC16IS750_CHAN_A,
-    6000000UL
-);
+KLineManager::KLineManager(SC16IS750& serial_port) {
+    port = serial_port;
+}
 
-void initKline() {
-    klineSerial.begin(10400);
-    klineSerial.flush();
-    if(! klineSerial.ping()) {
+void KLineManager::begin(uint16_t baud) {
+    port.begin(baud);
+    port.flush();
+    if(! port.ping()) {
         Serial.println("ERROR initializing K-Line.");
     }
+}
+
+void KLineManager::cycle() {
 }

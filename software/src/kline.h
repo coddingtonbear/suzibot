@@ -1,7 +1,13 @@
 #include <SC16IS750.h>
-
-// K-Line Settings
-#define CS_KLINE 23
+#include <Arduino.h>
 
 
-void initKline();
+class KLineManager
+{
+    public:
+        KLineManager(SC16IS750& serial_port);
+        void begin(uint16_t baud);
+        void cycle();
+    private:
+        SC16IS750 port;
+};

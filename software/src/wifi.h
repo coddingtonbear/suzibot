@@ -1,9 +1,13 @@
 #include <ESP8266.h>
 #include <SC16IS750.h>
+#include <Arduino.h>
 
-// WIFI Settings
-#define CS_WIFI 3
-#define FILENAME_AP_PASSWORDS_DB "/db/ap.db"
-
-void initWifi();
-ESP8266 getWifi();
+class WifiManager {
+    public:
+        WifiManager(SC16IS750& serial_port);
+        void begin(uint16_t baud);
+        void cycle();
+    private:
+        SC16IS750 port;
+        ESP8266 wifi;
+};

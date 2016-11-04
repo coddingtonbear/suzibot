@@ -45,6 +45,10 @@ ESP8266::ESP8266(SC16IS750 &uart): m_puart(&uart)
 {
 }
 
+ESP8266::ESP8266()
+{
+}
+
 void ESP8266::begin(void) {
     rx_empty();
 }
