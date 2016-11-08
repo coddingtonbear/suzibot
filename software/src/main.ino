@@ -12,6 +12,7 @@
 
 #define DISABLE_GPS 2
 #define ENABLE_LEVEL_CONVERTER 15
+#define ENABLE_3V3_REGULATOR A5
 #define RX_VOLTAGE A7
 #define TX_POWER_OFF 22
 
@@ -23,6 +24,7 @@
 AudioManager audio_mgr = AudioManager(PIEZO);
 SDCardManager sd_mgr = SDCardManager(CS_SD);
 PowerManager power_mgr = PowerManager(
+    ENABLE_3V3_REGULATOR,
     ENABLE_LEVEL_CONVERTER,
     RX_VOLTAGE,
     TX_POWER_OFF

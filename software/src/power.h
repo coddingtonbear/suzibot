@@ -7,6 +7,7 @@ class PowerManager: public StandardService
 {
     public:
         PowerManager(
+            uint8_t regulator_3v3_pin_no,
             uint8_t level_converter_pin_no,
             uint8_t voltage_12v_pin_no,
             uint8_t power_off_pin_no
@@ -19,6 +20,7 @@ class PowerManager: public StandardService
     private:
         void updateVoltage12v();
 
+        uint8_t regulator_3v3_pin;
         uint8_t level_converter_pin;
         uint8_t voltage_12v_pin;
         uint8_t power_off_pin;
