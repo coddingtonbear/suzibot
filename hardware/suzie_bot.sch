@@ -13889,6 +13889,7 @@ at 30/07/2012 17:45:58</description>
 <part name="C19" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C20" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="C21" library="SparkFun-Capacitors" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
+<part name="R9" library="SparkFun-Passives" deviceset="RESISTOR" device="0805-RES" value="1k"/>
 </parts>
 <sheets>
 <sheet>
@@ -13956,6 +13957,7 @@ at 30/07/2012 17:45:58</description>
 <instance part="C19" gate="G$1" x="205.74" y="292.1" rot="R180"/>
 <instance part="C20" gate="G$1" x="-147.32" y="180.34" rot="R270"/>
 <instance part="C21" gate="G$1" x="-93.98" y="180.34" rot="R270"/>
+<instance part="R9" gate="G$1" x="27.94" y="208.28" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -14454,7 +14456,8 @@ at 30/07/2012 17:45:58</description>
 <wire x1="78.74" y1="195.58" x2="71.12" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="71.12" y1="195.58" x2="63.5" y2="195.58" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="GND"/>
-<wire x1="63.5" y1="195.58" x2="22.86" y2="195.58" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="195.58" x2="27.94" y2="195.58" width="0.1524" layer="91"/>
+<wire x1="27.94" y1="195.58" x2="22.86" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="213.36" x2="60.96" y2="210.82" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="210.82" x2="66.04" y2="210.82" width="0.1524" layer="91"/>
 <wire x1="66.04" y1="210.82" x2="71.12" y2="205.74" width="0.1524" layer="91"/>
@@ -14600,6 +14603,9 @@ at 30/07/2012 17:45:58</description>
 <pinref part="C21" gate="G$1" pin="2"/>
 <wire x1="-96.52" y1="180.34" x2="-96.52" y2="195.58" width="0.1524" layer="91"/>
 <junction x="-96.52" y="195.58"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="27.94" y1="203.2" x2="27.94" y2="195.58" width="0.1524" layer="91"/>
+<junction x="27.94" y="195.58"/>
 </segment>
 </net>
 <net name="EXTGND" class="1">
@@ -15117,7 +15123,8 @@ at 30/07/2012 17:45:58</description>
 <segment>
 <wire x1="-40.64" y1="200.66" x2="-15.24" y2="226.06" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="!SHDN"/>
-<wire x1="-15.24" y1="226.06" x2="40.64" y2="226.06" width="0.1524" layer="91"/>
+<wire x1="-15.24" y1="226.06" x2="27.94" y2="226.06" width="0.1524" layer="91"/>
+<wire x1="27.94" y1="226.06" x2="40.64" y2="226.06" width="0.1524" layer="91"/>
 <wire x1="40.64" y1="226.06" x2="45.72" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="200.66" x2="-40.64" y2="170.18" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="170.18" x2="-33.02" y2="162.56" width="0.1524" layer="91"/>
@@ -15126,6 +15133,9 @@ at 30/07/2012 17:45:58</description>
 <wire x1="-7.62" y1="162.56" x2="-20.32" y2="162.56" width="0.1524" layer="91"/>
 <wire x1="-33.02" y1="162.56" x2="-20.32" y2="162.56" width="0.1524" layer="91"/>
 <junction x="-20.32" y="162.56"/>
+<pinref part="R9" gate="G$1" pin="2"/>
+<wire x1="27.94" y1="213.36" x2="27.94" y2="226.06" width="0.1524" layer="91"/>
+<junction x="27.94" y="226.06"/>
 </segment>
 </net>
 <net name="N$30" class="0">
