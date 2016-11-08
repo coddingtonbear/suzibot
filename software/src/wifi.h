@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <ESP8266.h>
 #include <SC16IS750.h>
 #include "service.h"
 
@@ -12,5 +11,4 @@ class WifiManager: public StandardService
     private:
         uint16_t baud;
         SC16IS750 port;
-        ESP8266 wifi;
 };
