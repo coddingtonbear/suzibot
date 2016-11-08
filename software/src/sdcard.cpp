@@ -1,6 +1,9 @@
 #include "sdcard.h"
 
 
+SPISettings sd_settings(250000, MSBFIRST, SPI_MODE0);
+
+
 SDCardManager::SDCardManager(uint8_t pin_no, unsigned long baud, String log_filename) {
     pin_number = pin_no;
     spi_baud = baud;
@@ -11,6 +14,8 @@ SDCardManager::SDCardManager(uint8_t pin_no, unsigned long baud, String log_file
 }
 
 void SDCardManager::begin() {
+    assert();
+
     if(! SD.begin(pin_number)) {
         Serial.println("ERROR initializing SD.");
     } else {
@@ -18,9 +23,19 @@ void SDCardManager::begin() {
             SD.mkdir("/db");
         }
     }
+
+    deassert();
 }
 
 void SDCardManager::cycle() {
+}
+
+void SDCardManager::assert() {
+    SPI.beginTransaction(sd_settings);
+}
+
+void SDCardManager::deassert() {
+    SPI.endTransaction();
 }
 
 void SDCardManager::logMessage(String message) {

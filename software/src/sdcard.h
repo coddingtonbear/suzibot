@@ -16,6 +16,9 @@ class SDCardManager: public StandardService
         void cycle();
         void logMessage(String message);
     private:
+        void assert();
+        void deassert();
+
         uint8_t pin_number;
         unsigned long spi_baud;
         String log_file_name;
