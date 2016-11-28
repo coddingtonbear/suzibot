@@ -4,10 +4,11 @@
 SPISettings sd_settings(250000, MSBFIRST, SPI_MODE0);
 
 
-SDCardManager::SDCardManager(uint8_t pin_no, unsigned long baud, String log_filename) {
+SDCardManager::SDCardManager(EventManager& evt_mgr, uint8_t pin_no, unsigned long baud, String log_filename) {
     pin_number = pin_no;
     spi_baud = baud;
     log_file_name = log_filename;
+    event_manager = evt_mgr;
 
     pinMode(pin_number, OUTPUT);
     digitalWrite(pin_number, HIGH);
@@ -39,9 +40,7 @@ void SDCardManager::deassert() {
 }
 
 void SDCardManager::logMessage(String message) {
-    /*
-    openFile = SD.open(FILENAME_LOG, FILE_WRITE);
-    openFile.println(message);
-    openFile.close();
-    */
+    //openFile = SD.open(FILENAME_LOG, FILE_WRITE);
+    //openFile.println(message);
+    //openFile.close();
 }

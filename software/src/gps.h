@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <EventManager.h>
 #include <SC16IS750.h>
 #include <TinyGPS++.h>
 #include "service.h"
@@ -9,7 +10,7 @@
 class GpsManager: public StandardService
 {
     public:
-        GpsManager(SC16IS750& serial_port, uint16_t baud_rate, uint8_t disable_gps_pin);
+        GpsManager(EventManager& evt_mgr, SC16IS750& serial_port, uint16_t baud_rate, uint8_t disable_gps_pin);
         void begin();
         void cycle();
         void disable();
@@ -21,4 +22,6 @@ class GpsManager: public StandardService
         uint8_t disable_gps;
         SC16IS750 port;
         TinyGPSPlus gps;
+        EventManager event_manager;
+        bool initialized;
 };

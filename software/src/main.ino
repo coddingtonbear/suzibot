@@ -1,5 +1,7 @@
+#include <EventManager.h>
 #include <SC16IS750.h>
 #include <SPI.h>
+
 #include "audio.h"
 #include "gps.h"
 #include "kline.h"
@@ -7,12 +9,12 @@
 #include "wifi.h"
 #include "power.h"
 
-#define LED 1
+#define LED 15
 #define PIEZO 0
 
 #define DISABLE_GPS 2
-#define ENABLE_LEVEL_CONVERTER 15
-#define ENABLE_3V3_REGULATOR A5
+#define ENABLE_LEVEL_CONVERTER 1
+#define ENABLE_3V3_REGULATOR A0
 #define RX_VOLTAGE A7
 #define TX_POWER_OFF 22
 
@@ -21,35 +23,38 @@
 #define CS_WIFI 3
 #define CS_GPS 3
 
-AudioManager audio_mgr = AudioManager(PIEZO);
-SDCardManager sd_mgr = SDCardManager(CS_SD);
+EventManager event_manager;
+
+AudioManager audio_mgr = AudioManager(event_manager, PIEZO);
+SDCardManager sd_mgr = SDCardManager(event_manager, CS_SD);
 PowerManager power_mgr = PowerManager(
+    event_manager,
     ENABLE_3V3_REGULATOR,
     ENABLE_LEVEL_CONVERTER,
     RX_VOLTAGE,
     TX_POWER_OFF
 );
 
+SC16IS750 kLine_serial = SC16IS750(
+    CS_KLINE,
+    SC16IS750_CHAN_A,
+    6000000UL
+);
+KLineManager kline_mgr = KLineManager(event_manager, kLine_serial, 10400);
+
 SC16IS750 gps_serial = SC16IS750(
     CS_GPS,
     SC16IS750_CHAN_A,
     14745600UL
 );
-GpsManager gps_mgr = GpsManager(gps_serial, 9600, DISABLE_GPS);
+GpsManager gps_mgr = GpsManager(event_manager, gps_serial, 9600, DISABLE_GPS);
 
 SC16IS750 wifi_serial = SC16IS750(
     CS_WIFI,
     SC16IS750_CHAN_B,
     14745600UL
 );
-WifiManager wifi_mgr = WifiManager(wifi_serial, 9600);
-
-SC16IS750 kLine_serial = SC16IS750(
-    CS_KLINE,
-    SC16IS750_CHAN_A,
-    6000000UL
-);
-KLineManager kline_mgr = KLineManager(kLine_serial, 10400);
+WifiManager wifi_mgr = WifiManager(event_manager, wifi_serial, 9600);
 
 void bridgeSerial(SC16IS750& serial, bool send = true) {
     while (serial.available()) {

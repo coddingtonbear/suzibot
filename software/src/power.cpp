@@ -2,6 +2,7 @@
 
 
 PowerManager::PowerManager(
+    EventManager& evt_mgr,
     uint8_t regulator_3v3_pin_no,
     uint8_t level_converter_pin_no,
     uint8_t voltage_12v_pin_no,
@@ -21,12 +22,16 @@ PowerManager::PowerManager(
     power_off_pin = power_off_pin_no;
     pinMode(power_off_pin, OUTPUT);
     digitalWrite(power_off_pin, LOW);
+
+    event_manager = evt_mgr;
 }
 
 void PowerManager::begin() {
     delay(1000);
-    digitalWrite(level_converter_pin, HIGH);
     digitalWrite(regulator_3v3_pin, HIGH);
+    delay(1000);
+    digitalWrite(level_converter_pin, HIGH);
+    delay(500);
 }
 
 void PowerManager::cycle() {

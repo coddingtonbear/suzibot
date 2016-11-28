@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <EventManager.h>
 #include "pitches.h"
 #include "service.h"
 
@@ -10,10 +11,11 @@ const int ERROR[] = {NOTE_A4, NOTE_A4, NOTE_A4};
 class AudioManager: public StandardService
 {
     public:
-        AudioManager(uint8_t pin_no);
+        AudioManager(EventManager& evt_mgr, uint8_t pin_no);
         void playNotes(const int* notes, uint8_t length);
         void begin();
         void cycle();
     private:
         uint8_t pin_number;
+        EventManager event_manager;
 };

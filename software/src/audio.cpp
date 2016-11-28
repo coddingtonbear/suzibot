@@ -1,7 +1,8 @@
 #include "audio.h"
 
-AudioManager::AudioManager(uint8_t pin_no) {
+AudioManager::AudioManager(EventManager& evt_mgr, uint8_t pin_no) {
     pin_number = pin_no;
+    event_manager = evt_mgr;
 
     pinMode(pin_number, OUTPUT);
 }

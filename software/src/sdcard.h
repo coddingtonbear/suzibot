@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <EventManager.h>
 #include <SD.h>
 #include "service.h"
 
@@ -8,6 +9,7 @@ class SDCardManager: public StandardService
 {
     public:
         SDCardManager(
+            EventManager& evt_mgr,
             uint8_t pin_no,
             unsigned long baud = 250000,
             String log_filename = FILENAME_LOG
@@ -23,4 +25,5 @@ class SDCardManager: public StandardService
         unsigned long spi_baud;
         String log_file_name;
         File log_file;
+        EventManager event_manager;
 };
