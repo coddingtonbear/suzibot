@@ -20,12 +20,12 @@ Please keep the above information when you use this code in your project.
 */
 
 //#define SC16IS750_DEBUG_PRINT
-#include <SC16IS750.h>
 #include <SPI.h>
+#include "SC16IS750.h"
 
 
-//SPISettings settings(1000000, MSBFIRST, SPI_MODE0);
-SPISettings settings(250000, MSBFIRST, SPI_MODE0);
+SPISettings settings(2000000, MSBFIRST, SPI_MODE0);
+//SPISettings settings(250000, MSBFIRST, SPI_MODE0);
 
 SC16IS750::SC16IS750(
     uint8_t addr_sspin,
