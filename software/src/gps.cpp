@@ -9,7 +9,7 @@ GpsManager::GpsManager(EventManager& evt_mgr, SC16IS750& serial_port, uint16_t b
     initialized = false;
 
     pinMode(disable_gps, OUTPUT);
-    digitalWrite(disable_gps, HIGH);
+    disable();
 }
 
 void GpsManager::disable() {

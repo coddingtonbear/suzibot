@@ -12,12 +12,12 @@ PowerManager::PowerManager(
     pinMode(level_converter_pin, OUTPUT);
     digitalWrite(level_converter_pin, LOW);
 
+    voltage_12v_pin = voltage_12v_pin_no;
+    pinMode(voltage_12v_pin, INPUT);
+
     regulator_3v3_pin = regulator_3v3_pin_no;
     pinMode(regulator_3v3_pin, OUTPUT);
     digitalWrite(regulator_3v3_pin, LOW);
-
-    voltage_12v_pin = voltage_12v_pin_no;
-    pinMode(voltage_12v_pin, INPUT);
 
     power_off_pin = power_off_pin_no;
     pinMode(power_off_pin, OUTPUT);
@@ -27,11 +27,10 @@ PowerManager::PowerManager(
 }
 
 void PowerManager::begin() {
-    delay(1000);
+    delay(5000);
     digitalWrite(regulator_3v3_pin, HIGH);
-    delay(1000);
+    delay(100);
     digitalWrite(level_converter_pin, HIGH);
-    delay(500);
 }
 
 void PowerManager::cycle() {

@@ -91,13 +91,13 @@ void setup() {
     Serial.println("Initializing K-Line...");
     kline_mgr.begin();
 
-    /* WIFI */
-    Serial.println("Initializing WIFI...");
-    wifi_mgr.begin();
-
     /* GPS */
     Serial.println("Initializing GPS...");
     gps_mgr.begin();
+
+    /* WIFI */
+    Serial.println("Initializing WIFI...");
+    wifi_mgr.begin();
 
     Serial.println("Ready.");
 }
@@ -109,10 +109,6 @@ void loop() {
     sd_mgr.cycle();
     audio_mgr.cycle();
     power_mgr.cycle();
-
-    //wifiSerial.flush();
-    //bridgeSerial(wifiSerial);
-    //bridgeSerial(gpsSerial, false);
 
     /*
      * LOGGING
