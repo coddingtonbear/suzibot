@@ -19,15 +19,9 @@ CC BY-NC-SA 3.0
 Please keep the above information when you use this code in your project. 
 */
 
+#pragma once
 
-#ifndef _SC16IS750_H_
-#define _SC16IS750_H_
-
-#if ARDUINO >= 100
- #include "Arduino.h"
-#else
- #include "WProgram.h"
-#endif
+#include "Arduino.h"
 
 //Device Address
 
@@ -115,8 +109,6 @@ Please keep the above information when you use this code in your project.
 #define     SC16IS750_PROTOCOL_SPI  (1)
 
 
-
-
 class SC16IS750 : public Stream
 { 
     public:
@@ -184,12 +176,3 @@ class SC16IS750 : public Stream
 		uint8_t peek_flag;
 		
 };
-
-#endif
-
-
-
-
-
-    
-    

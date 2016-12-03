@@ -36,28 +36,28 @@ PowerManager power_mgr = PowerManager(
     TX_POWER_OFF
 );
 
-SC16IS750 kLine_serial = SC16IS750(
+SC16IS750 kline_serial = SC16IS750(
     CS_KLINE,
     SC16IS750_CHAN_A,
     6000000UL
 );
-KLineManager kline_mgr = KLineManager(event_manager, kLine_serial, 10400);
+KLineManager kline_mgr = KLineManager(event_manager, &kline_serial);
 
 SC16IS750 gps_serial = SC16IS750(
     CS_GPS,
     SC16IS750_CHAN_A,
     14745600UL
 );
-GpsManager gps_mgr = GpsManager(event_manager, gps_serial, 9600, DISABLE_GPS);
+GpsManager gps_mgr = GpsManager(event_manager, &gps_serial, DISABLE_GPS);
 
 SC16IS750 wifi_serial = SC16IS750(
     CS_WIFI,
     SC16IS750_CHAN_B,
     14745600UL
 );
-WifiManager wifi_mgr = WifiManager(event_manager, wifi_serial, 9600);
+WifiManager wifi_mgr = WifiManager(event_manager, &wifi_serial);
 
-void bridgeSerial(SC16IS750& serial, bool send = true) {
+void bridgeSerial(Stream& serial, bool send = true) {
     while (serial.available()) {
         uint8_t value = serial.read();
         Serial.write(value);
@@ -90,15 +90,30 @@ void setup() {
 
     /* K-Line */
     Serial.println("Initializing K-Line...");
-    kline_mgr.begin();
+    kline_serial.begin(10400);
+    if (kline_serial.ping()) {
+        kline_mgr.begin();
+    } else {
+        Serial.println("Error initializing K-Line.");
+    }
 
     /* GPS */
     Serial.println("Initializing GPS...");
-    gps_mgr.begin();
+    gps_serial.begin(9600);
+    if (gps_serial.ping()) {
+        gps_mgr.begin();
+    } else {
+        Serial.println("Error initializing GPS.");
+    }
 
     /* WIFI */
     Serial.println("Initializing WIFI...");
-    wifi_mgr.begin();
+    wifi_serial.begin(9600);
+    if (wifi_serial.ping()) {
+        wifi_mgr.begin();
+    } else {
+        Serial.println("Error initializing WIFI.");
+    }
 
     Serial.println("Ready.");
 }

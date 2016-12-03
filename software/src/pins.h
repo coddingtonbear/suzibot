@@ -1,5 +1,4 @@
-#ifndef MIGHTYCORE_PINS
-#define MIGHTYCORE_PINS 1
+#pragma once
 
 #define PIN_PB0 0
 #define PIN_PB1 1
@@ -36,5 +35,3 @@
 #define PIN_PA5 A5
 #define PIN_PA6 A6
 #define PIN_PA7 A7
-
-#endif
