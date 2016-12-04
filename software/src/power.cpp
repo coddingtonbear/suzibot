@@ -27,7 +27,7 @@ PowerManager::PowerManager(
 }
 
 void PowerManager::begin() {
-    delay(5000);
+    delay(3000);
     digitalWrite(regulator_3v3_pin, HIGH);
     delay(100);
     digitalWrite(level_converter_pin, HIGH);
