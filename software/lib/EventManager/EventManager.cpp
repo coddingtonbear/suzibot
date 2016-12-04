@@ -180,10 +180,10 @@ EventManager::EventManager()
 int EventManager::processEvent()
 {
     int eventCode;
-    int param;
+    String* param;
     int handledCount = 0;
 
-    if ( mHighPriorityQueue.popEvent( &eventCode, &param ) )
+    if ( mHighPriorityQueue.popEvent( &eventCode, param ) )
     {
         handledCount = mListeners.sendEvent( eventCode, param );
 
@@ -197,7 +197,7 @@ int EventManager::processEvent()
 
     // If no high-pri events handled (either because there are no high-pri events or
     // because there are no listeners for them), then try low-pri events
-    if ( !handledCount && mLowPriorityQueue.popEvent( &eventCode, &param ) )
+    if ( !handledCount && mLowPriorityQueue.popEvent( &eventCode, param ) )
     {
         handledCount = mListeners.sendEvent( eventCode, param );
 
@@ -216,10 +216,10 @@ int EventManager::processEvent()
 int EventManager::processAllEvents()
 {
     int eventCode;
-    int param;
+    String* param;
     int handledCount = 0;
 
-    while ( mHighPriorityQueue.popEvent( &eventCode, &param ) )
+    while ( mHighPriorityQueue.popEvent( &eventCode, param ) )
     {
         handledCount += mListeners.sendEvent( eventCode, param );
 
@@ -231,7 +231,7 @@ int EventManager::processAllEvents()
         EVTMGR_DEBUG_PRINTLN( handledCount )
     }
 
-    while ( mLowPriorityQueue.popEvent( &eventCode, &param ) )
+    while ( mLowPriorityQueue.popEvent( &eventCode, param ) )
     {
         handledCount += mListeners.sendEvent( eventCode, param );
 
@@ -410,7 +410,7 @@ boolean EventManager::ListenerList::isListenerEnabled( int eventCode, EventListe
 }
 
 
-int EventManager::ListenerList::sendEvent( int eventCode, int param )
+int EventManager::ListenerList::sendEvent( int eventCode, String* param )
 {
     EVTMGR_DEBUG_PRINT( "sendEvent() enter " )
     EVTMGR_DEBUG_PRINT( eventCode )
@@ -448,6 +448,8 @@ int EventManager::ListenerList::sendEvent( int eventCode, int param )
 #endif
 
     }
+
+    delete param;
 
     return handlerCount;
 }
@@ -541,13 +543,13 @@ mNumEvents( 0 )
     for ( int i = 0; i < kEventQueueSize; i++ )
     {
         mEventQueue[i].code = EventManager::kEventNone;
-        mEventQueue[i].param = 0;
+        mEventQueue[i].param = nullptr;
     }
 }
 
 
 
-boolean EventManager::EventQueue::queueEvent( int eventCode, int eventParam )
+boolean EventManager::EventQueue::queueEvent( int eventCode, String* eventParam )
 {
     /*
     * The call to noInterrupts() MUST come BEFORE the full queue check.
@@ -595,7 +597,7 @@ boolean EventManager::EventQueue::queueEvent( int eventCode, int eventParam )
 }
 
 
-boolean EventManager::EventQueue::popEvent( int* eventCode, int* eventParam )
+boolean EventManager::EventQueue::popEvent( int* eventCode, String* eventParam )
 {
     /*
     * The call to noInterrupts() MUST come AFTER the empty queue check.
@@ -626,7 +628,7 @@ boolean EventManager::EventQueue::popEvent( int* eventCode, int* eventParam )
     // Pop the event from the head of the queue
     // Store event code and event parameter into the user-supplied variables
     *eventCode  = mEventQueue[ mEventQueueHead ].code;
-    *eventParam = mEventQueue[ mEventQueueHead ].param;
+    eventParam = mEventQueue[ mEventQueueHead ].param;
 
     // Clear the event (paranoia)
     mEventQueue[ mEventQueueHead ].code = EventManager::kEventNone;

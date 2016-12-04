@@ -56,7 +56,7 @@ class EventManager
 public:
 
     // Type for an event listener (a.k.a. callback) function
-    typedef void ( *EventListener )( int eventCode, int eventParam );
+    typedef void ( *EventListener )( int eventCode, String* eventParam );
 
     // EventManager recognizes two kinds of events.  By default, events are
     // are queued as low priority, but these constants can be used to explicitly
@@ -182,7 +182,7 @@ public:
     // tries to insert an event into the queue;
     // returns true if successful, false if the
     // queue if full and the event cannot be inserted
-    boolean queueEvent( int eventCode, int eventParam, EventPriority pri = kLowPriority );
+    boolean queueEvent( int eventCode, String* eventParam, EventPriority pri = kLowPriority );
 
     // this must be called regularly (usually by calling it inside the loop() function)
     int processEvent();
@@ -219,11 +219,11 @@ private:
         // NOTE: if EventManager is instantiated in interrupt safe mode, this function can be called
         // from interrupt handlers.  This is the ONLY EventManager function that can be called from
         // an interrupt.
-        boolean queueEvent( int eventCode, int eventParam );
+        boolean queueEvent( int eventCode, String* eventParam );
 
         // Tries to extract an event from the queue;
         // Returns true if successful, false if the queue is empty (the parameteres are not touched in this case)
-        boolean popEvent( int* eventCode, int* eventParam );
+        boolean popEvent( int* eventCode, String* eventParam );
 
     private:
 
@@ -235,7 +235,7 @@ private:
         struct EventElement
         {
             int code;	// each event is represented by an integer code
-            int param;	// each event has a single integer parameter
+            String* param;  // each event has a single integer parameter
         };
 
         // The event queue
@@ -291,7 +291,7 @@ private:
         boolean isFull();
 
         // Send an event to the listeners; returns number of listeners that handled the event
-        int sendEvent( int eventCode, int param );
+        int sendEvent( int eventCode, String* param );
 
         int numListeners();
 
@@ -402,7 +402,7 @@ inline int EventManager::getNumEventsInQueue( EventPriority pri )
     return ( pri == kHighPriority ) ? mHighPriorityQueue.getNumEvents() : mLowPriorityQueue.getNumEvents();
 }
 
-inline boolean EventManager::queueEvent( int eventCode, int eventParam, EventPriority pri )
+inline boolean EventManager::queueEvent( int eventCode, String* eventParam, EventPriority pri )
 {
     return ( pri == kHighPriority ) ?
         mHighPriorityQueue.queueEvent( eventCode, eventParam ) : mLowPriorityQueue.queueEvent( eventCode, eventParam );
