@@ -99,6 +99,7 @@ void setup() {
 
     Serial.println("Ready.");
 
+    /*
     event_manager.addListener(
         EventManager::kEventNewGPSCoordinate,
         print_gps_coordinate
@@ -107,6 +108,7 @@ void setup() {
         EventManager::kEventNewMemoryMeasurement,
         print_memory_available
     );
+    */
 }
 
 void print_gps_coordinate(int event_id, String* param) {
@@ -150,6 +152,15 @@ void loop() {
     event_manager.processAllEvents();
 
     //bridgeSerial(wifi_serial);
+    if(wifi_mgr.ready()) {
+        String wifi_data = wifi_mgr.get_data();
+        if(wifi_data.length()) {
+            Serial.print("Data available for ");
+            Serial.print(wifi_mgr.get_command());
+            Serial.println(": ");
+            Serial.println(wifi_data);
+        }
+    }
 
     /*
      * LOGGING

@@ -14,7 +14,7 @@ void SystemManager::begin()
 
 void SystemManager::cycle()
 {
-    if ((micros() - last_memory_check) > 5e6) {
+    if ((millis() - last_memory_check) > 5e3) {
         int free_memory = get_free_memory();
         int pre_check_size = last_memory_size;
         last_memory_size = free_memory;
