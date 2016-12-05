@@ -33,7 +33,7 @@ SC16IS750 wifi_serial = SC16IS750(
     SC16IS750_CHAN_B,
     14745600UL
 );
-WifiManager wifi_mgr = WifiManager(&event_manager, &wifi_serial);
+WifiManager wifi_mgr = WifiManager(&event_manager, &wifi_serial, &sd_mgr);
 
 void bridgeSerial(Stream& serial, bool send) {
     while (serial.available()) {

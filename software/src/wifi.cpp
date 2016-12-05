@@ -1,9 +1,10 @@
 #include "wifi.h"
 
 
-WifiManager::WifiManager(EventManager* evt_mgr, Stream* serial_port):
+WifiManager::WifiManager(EventManager* evt_mgr, Stream* serial_port, SDCardManager* sd_mgr):
     event_manager(evt_mgr),
     port(serial_port),
+    sd_manager(sd_mgr),
     initialized(false),
     status(COMMAND_OK)
 {
@@ -12,8 +13,6 @@ WifiManager::WifiManager(EventManager* evt_mgr, Stream* serial_port):
 void WifiManager::begin()
 {
     initialized = true;
-
-    command("AT+CWLAP");
 }
 
 void WifiManager::cycle()
@@ -32,8 +31,15 @@ void WifiManager::cycle()
             } else if (millis() > command_timeout) {
                 status = COMMAND_TIMEOUT;
             }
+            if(command_callback_name) {
+                call_command_callback(status, command_data);
+            }
         }
     }
+}
+
+void WifiManager::call_command_callback(WifiCommandStatus status, String command_data)
+{
 }
 
 String WifiManager::get_command() {
@@ -62,11 +68,16 @@ bool WifiManager::ready() {
     return status == COMMAND_OK;
 }
 
-void WifiManager::command(String cmd_name, int timeout)
+void WifiManager::command(
+    String cmd_name,
+    String cmd_callback_name,
+    int timeout
+)
 {
     command_name = cmd_name;
     command_data = "";
     command_timeout = millis() + timeout;
+    command_callback_name = cmd_callback_name;
     status = COMMAND_BUSY;
 
     port->flush();
