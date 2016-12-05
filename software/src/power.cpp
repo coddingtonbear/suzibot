@@ -2,7 +2,7 @@
 
 
 PowerManager::PowerManager(
-    EventManager& evt_mgr,
+    EventManager* evt_mgr,
     uint8_t regulator_3v3_pin_no,
     uint8_t level_converter_pin_no,
     uint8_t voltage_12v_pin_no,

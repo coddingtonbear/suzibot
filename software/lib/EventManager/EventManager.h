@@ -40,7 +40,7 @@
 // Size of the listener list.  Adjust as appropriate for your application.
 // Requires a total of sizeof(*f())+sizeof(int)+sizeof(boolean) bytes of RAM for each unit of size
 #ifndef EVENTMANAGER_LISTENER_LIST_SIZE
-#define EVENTMANAGER_LISTENER_LIST_SIZE		8
+#define EVENTMANAGER_LISTENER_LIST_SIZE		16
 #endif
 
 // Size of the event two queues.  Adjust as appropriate for your application.
@@ -48,6 +48,8 @@
 #ifndef EVENTMANAGER_EVENT_QUEUE_SIZE
 #define EVENTMANAGER_EVENT_QUEUE_SIZE		8
 #endif
+
+//#define EVENTMANAGER_DEBUG 1
 
 
 class EventManager
@@ -72,63 +74,15 @@ public:
         // No event occurred; param: none
         kEventNone = 200,
 
-        // A key was pressed;  param: key code
-        kEventKeyPress,
+        // From GPS
+        kEventNewGPSCoordinate,
 
-        // A key was released;  param: key code
-        kEventKeyRelease,
+        // From WIFI
+        kEventWifiConnected,
 
-        // Use this to notify a character;  param: the character to be notified
-        kEventChar,
-
-        // Generic time event
-        // param: a time value (exact meaning is defined by the code inserting this event into the queue)
-        kEventTime,
-
-        // Generic timer events; param: same as EV_TIME
-        kEventTimer0,
-        kEventTimer1,
-        kEventTimer2,
-        kEventTimer3,
-
-        // Analog read (last number = analog channel);  param: value read
-        kEventAnalog0,
-        kEventAnalog1,
-        kEventAnalog2,
-        kEventAnalog3,
-        kEventAnalog4,
-        kEventAnalog5,
-
-        // Menu events
-        kEventMenu0,
-        kEventMenu1,
-        kEventMenu2,
-        kEventMenu3,
-        kEventMenu4,
-        kEventMenu5,
-        kEventMenu6,
-        kEventMenu7,
-        kEventMenu8,
-        kEventMenu9,
-
-        // Serial event, example: a new char is available
-        // param: the return value of Serial.read()
-        kEventSerial,
-
-        // LCD screen needs to be refreshed
-        kEventPaint,
-
-        // User events
-        kEventUser0,
-        kEventUser1,
-        kEventUser2,
-        kEventUser3,
-        kEventUser4,
-        kEventUser5,
-        kEventUser6,
-        kEventUser7,
-        kEventUser8,
-        kEventUser9
+        // From System
+        kEventNewMemoryMeasurement,
+        kEventLowMemoryWarning
     };
 
 
@@ -223,7 +177,7 @@ private:
 
         // Tries to extract an event from the queue;
         // Returns true if successful, false if the queue is empty (the parameteres are not touched in this case)
-        boolean popEvent( int* eventCode, String* eventParam );
+        boolean popEvent( int* eventCode, String** eventParam );
 
     private:
 
@@ -404,8 +358,11 @@ inline int EventManager::getNumEventsInQueue( EventPriority pri )
 
 inline boolean EventManager::queueEvent( int eventCode, String* eventParam, EventPriority pri )
 {
-    return ( pri == kHighPriority ) ?
-        mHighPriorityQueue.queueEvent( eventCode, eventParam ) : mLowPriorityQueue.queueEvent( eventCode, eventParam );
+    if( pri == kHighPriority ) {
+        mHighPriorityQueue.queueEvent( eventCode, eventParam );
+    } else {
+        mLowPriorityQueue.queueEvent( eventCode, eventParam );
+    }
 }
 
 

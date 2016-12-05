@@ -183,30 +183,31 @@ int EventManager::processEvent()
     String* param;
     int handledCount = 0;
 
-    if ( mHighPriorityQueue.popEvent( &eventCode, param ) )
+    if ( mHighPriorityQueue.popEvent( &eventCode, &param ) )
     {
-        handledCount = mListeners.sendEvent( eventCode, param );
-
         EVTMGR_DEBUG_PRINT( "processEvent() hi-pri event " )
         EVTMGR_DEBUG_PRINT( eventCode )
         EVTMGR_DEBUG_PRINT( ", " )
-        EVTMGR_DEBUG_PRINT( param )
+        EVTMGR_DEBUG_PRINT( *param )
         EVTMGR_DEBUG_PRINT( " sent to " )
         EVTMGR_DEBUG_PRINTLN( handledCount )
+
+        handledCount = mListeners.sendEvent( eventCode, param );
+
     }
 
     // If no high-pri events handled (either because there are no high-pri events or
     // because there are no listeners for them), then try low-pri events
-    if ( !handledCount && mLowPriorityQueue.popEvent( &eventCode, param ) )
+    if ( !handledCount && mLowPriorityQueue.popEvent( &eventCode, &param ) )
     {
-        handledCount = mListeners.sendEvent( eventCode, param );
-
         EVTMGR_DEBUG_PRINT( "processEvent() lo-pri event " )
         EVTMGR_DEBUG_PRINT( eventCode )
         EVTMGR_DEBUG_PRINT( ", " )
-        EVTMGR_DEBUG_PRINT( param )
+        EVTMGR_DEBUG_PRINT( *param )
         EVTMGR_DEBUG_PRINT( " sent to " )
         EVTMGR_DEBUG_PRINTLN( handledCount )
+
+        handledCount = mListeners.sendEvent( eventCode, param );
     }
 
     return handledCount;
@@ -219,26 +220,26 @@ int EventManager::processAllEvents()
     String* param;
     int handledCount = 0;
 
-    while ( mHighPriorityQueue.popEvent( &eventCode, param ) )
+    while ( mHighPriorityQueue.popEvent( &eventCode, &param ) )
     {
         handledCount += mListeners.sendEvent( eventCode, param );
 
         EVTMGR_DEBUG_PRINT( "processEvent() hi-pri event " )
         EVTMGR_DEBUG_PRINT( eventCode )
         EVTMGR_DEBUG_PRINT( ", " )
-        EVTMGR_DEBUG_PRINT( param )
+        EVTMGR_DEBUG_PRINT( *param )
         EVTMGR_DEBUG_PRINT( " sent to " )
         EVTMGR_DEBUG_PRINTLN( handledCount )
     }
 
-    while ( mLowPriorityQueue.popEvent( &eventCode, param ) )
+    while ( mLowPriorityQueue.popEvent( &eventCode, &param ) )
     {
         handledCount += mListeners.sendEvent( eventCode, param );
 
         EVTMGR_DEBUG_PRINT( "processEvent() lo-pri event " )
         EVTMGR_DEBUG_PRINT( eventCode )
         EVTMGR_DEBUG_PRINT( ", " )
-        EVTMGR_DEBUG_PRINT( param )
+        EVTMGR_DEBUG_PRINT( *param )
         EVTMGR_DEBUG_PRINT( " sent to " )
         EVTMGR_DEBUG_PRINTLN( handledCount )
     }
@@ -415,7 +416,7 @@ int EventManager::ListenerList::sendEvent( int eventCode, String* param )
     EVTMGR_DEBUG_PRINT( "sendEvent() enter " )
     EVTMGR_DEBUG_PRINT( eventCode )
     EVTMGR_DEBUG_PRINT( ", " )
-    EVTMGR_DEBUG_PRINTLN( param )
+    EVTMGR_DEBUG_PRINTLN( *param )
 
     int handlerCount = 0;
     for ( int i = 0; i < mNumListeners; i++ )
@@ -597,7 +598,7 @@ boolean EventManager::EventQueue::queueEvent( int eventCode, String* eventParam 
 }
 
 
-boolean EventManager::EventQueue::popEvent( int* eventCode, String* eventParam )
+boolean EventManager::EventQueue::popEvent( int* eventCode, String** eventParam )
 {
     /*
     * The call to noInterrupts() MUST come AFTER the empty queue check.
@@ -628,7 +629,7 @@ boolean EventManager::EventQueue::popEvent( int* eventCode, String* eventParam )
     // Pop the event from the head of the queue
     // Store event code and event parameter into the user-supplied variables
     *eventCode  = mEventQueue[ mEventQueueHead ].code;
-    eventParam = mEventQueue[ mEventQueueHead ].param;
+    *eventParam = mEventQueue[ mEventQueueHead ].param;
 
     // Clear the event (paranoia)
     mEventQueue[ mEventQueueHead ].code = EventManager::kEventNone;

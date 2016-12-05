@@ -7,11 +7,11 @@
 class WifiManager: public StandardService
 {
     public:
-        WifiManager(EventManager& evt_mgr, Stream* serial_port);
+        WifiManager(EventManager* evt_mgr, Stream* serial_port);
         void begin();
         void cycle();
     private:
-        EventManager event_manager;
+        EventManager* event_manager;
         Stream* port;
         bool initialized;
 };

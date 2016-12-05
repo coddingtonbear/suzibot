@@ -4,7 +4,7 @@
 SPISettings sd_settings(250000, MSBFIRST, SPI_MODE0);
 
 
-SDCardManager::SDCardManager(EventManager& evt_mgr, uint8_t pin_no, unsigned long baud, String log_filename) {
+SDCardManager::SDCardManager(EventManager* evt_mgr, uint8_t pin_no, unsigned long baud, String log_filename) {
     pin_number = pin_no;
     spi_baud = baud;
     log_file_name = log_filename;

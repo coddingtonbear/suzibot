@@ -8,6 +8,7 @@
 #include "pins.h"
 #include "power.h"
 #include "sdcard.h"
+#include "system.h"
 #include "wifi.h"
 
 #define LED PIN_PD7
@@ -27,3 +28,5 @@
 void bridgeSerial(Stream& serial, bool send=true);
 void setup();
 void loop();
+void print_gps_coordinate(int event_id, String* param);
+void print_memory_available(int event_id, String* param);

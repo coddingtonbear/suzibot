@@ -1,7 +1,7 @@
 #include "gps.h"
 
 
-GpsManager::GpsManager(EventManager& evt_mgr, Stream* serial_port, uint8_t disable_gps_pin):
+GpsManager::GpsManager(EventManager* evt_mgr, Stream* serial_port, uint8_t disable_gps_pin):
     event_manager(evt_mgr),
     port(serial_port),
     disable_gps(disable_gps_pin),
@@ -39,6 +39,29 @@ void GpsManager::begin() {
 void GpsManager::cycle() {
     if (initialized) {
         updateLocation();
+        if (gps.location.isUpdated()) {
+            // Build a JSON object having this data
+            String* output = new String();
+            StaticJsonBuffer<200> jsonBuffer;
+            JsonObject& root = jsonBuffer.createObject();
+            root["lat"] = double_with_n_digits(gps.location.lat(), 6);
+            root["lng"] = double_with_n_digits(gps.location.lng(), 6);
+            root["alt"] = gps.altitude.meters();
+            root["year"] = gps.date.year();
+            root["month"] = gps.date.month();
+            root["day"] = gps.date.day();
+            root["hr"] = gps.time.hour();
+            root["min"] = gps.time.minute();
+            root["sec"] = gps.time.second();
+            root["csec"] = gps.time.centisecond();
+            root.printTo(*output);
+
+            // Emit the event
+            event_manager->queueEvent(
+                EventManager::kEventNewGPSCoordinate,
+                output
+            );
+        }
     }
 }
 
