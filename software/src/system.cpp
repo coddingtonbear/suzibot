@@ -1,11 +1,14 @@
 #include "system.h"
 
 
-SystemManager::SystemManager(EventManager* evt_mgr):
+SystemManager::SystemManager(EventManager* evt_mgr, uint8_t led_pin_no):
     event_manager(evt_mgr),
+    led_pin(led_pin_no),
     last_memory_check(0),
     last_memory_size(0)
 {
+    pinMode(led_pin, OUTPUT);
+    digitalWrite(led_pin, HIGH);
 }
 
 void SystemManager::begin()

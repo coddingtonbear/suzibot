@@ -12,7 +12,7 @@ PowerManager power_mgr = PowerManager(
     RX_VOLTAGE,
     TX_POWER_OFF
 );
-SystemManager system_mgr = SystemManager(&event_manager);
+SystemManager system_mgr = SystemManager(&event_manager, LED);
 
 SC16IS750 kline_serial = SC16IS750(
     CS_KLINE,
@@ -48,9 +48,6 @@ void bridgeSerial(Stream& serial, bool send) {
 }
 
 void setup() {
-    pinMode(LED, OUTPUT);
-    digitalWrite(LED, HIGH);
-
     SPI.begin();
     Serial.begin(1000000);
 
