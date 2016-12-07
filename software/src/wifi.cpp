@@ -6,8 +6,10 @@ WifiManager::WifiManager(EventManager* evt_mgr, Stream* serial_port, SDCardManag
     port(serial_port),
     sd_manager(sd_mgr),
     initialized(false),
-    status(COMMAND_OK)
+    command_status(COMMAND_OK),
+    status(WIFI_DISCONNECTED)
 {
+    command_data.reserve(1e3);
 }
 
 void WifiManager::begin()
@@ -19,26 +21,26 @@ void WifiManager::cycle()
 {
     while(port->available()) {
         char byte = (char)port->read();
-        if(status == COMMAND_BUSY) {
+        if(command_status == COMMAND_BUSY) {
             command_data += byte;
             if(
                 command_data.lastIndexOf("\r\nERROR") != -1 ||
                 command_data.lastIndexOf("\r\nFAIL") != -1
             ) {
-                status = COMMAND_FAILED;
+                command_status = COMMAND_FAILED;
             } else if (command_data.lastIndexOf("\r\nOK") != -1) {
-                status = COMMAND_OK;
+                command_status = COMMAND_OK;
             } else if (millis() > command_timeout) {
-                status = COMMAND_TIMEOUT;
+                command_status = COMMAND_TIMEOUT;
             }
             if(command_callback_name) {
-                call_command_callback(status, command_data);
+                call_command_callback(command_status, command_data);
             }
         }
     }
 }
 
-void WifiManager::call_command_callback(WifiCommandStatus status, String command_data)
+void WifiManager::call_command_callback(WifiCommandStatus command_status, String command_data)
 {
 }
 
@@ -53,19 +55,19 @@ String WifiManager::get_data(bool reset) {
 }
 
 bool WifiManager::timeout() {
-    return status == COMMAND_TIMEOUT;
+    return command_status == COMMAND_TIMEOUT;
 }
 
 bool WifiManager::failed() {
-    return status == COMMAND_FAILED;
+    return command_status == COMMAND_FAILED;
 }
 
 bool WifiManager::busy() {
-    return status == COMMAND_BUSY;
+    return command_status == COMMAND_BUSY;
 }
 
 bool WifiManager::ready() {
-    return status == COMMAND_OK;
+    return command_status == COMMAND_OK;
 }
 
 void WifiManager::command(
@@ -76,9 +78,10 @@ void WifiManager::command(
 {
     command_name = cmd_name;
     command_data = "";
+    command_data.reserve(1e3)
     command_timeout = millis() + timeout;
     command_callback_name = cmd_callback_name;
-    status = COMMAND_BUSY;
+    command_status = COMMAND_BUSY;
 
     port->flush();
     for(uint8_t i = 0; i < command_name.length(); i++) {

@@ -5,6 +5,33 @@
 #include "sdcard.h"
 #include "service.h"
 
+enum WifiCommandStatus {
+    COMMAND_READY,
+    COMMAND_TIMEOUT,
+    COMMAND_OK,
+    COMMAND_FAILED,
+    COMMAND_BUSY
+};
+
+enum WifiStatus {
+    WIFI_DISCONNECTED,
+    WIFI_LIST_APS,
+    WIFI_CONNECTION_ATTEMPT,
+    WIFI_CONNECTED
+};
+
+struct WifiStateTransition
+{
+    WifiStateTransition(
+        WifiStatus from,
+        WifiStatus to,
+        String name
+    );
+    String name;
+    WifiStatus from;
+    WifiStatus to;
+};
+
 class WifiManager: public StandardService
 {
     public:
@@ -27,22 +54,17 @@ class WifiManager: public StandardService
             int timeout=5000
         );
     private:
+        WifiStateTransition[] = {
+            WifiStateTransition(
+        }
         EventManager* event_manager;
         SDCardManager* sd_manager;
         Stream* port;
         String command_name;
         String command_data;
         String command_callback_name;
-        enum WifiCommandStatus {
-            COMMAND_READY,
-            COMMAND_TIMEOUT,
-            COMMAND_OK,
-            COMMAND_FAILED,
-            COMMAND_BUSY
-        };
-        enum WifiCommandCallback {
-        };
-        WifiCommandStatus status;
+        WifiCommandStatus command_status;
+        WifiStatus status;
         void call_command_callback(
             WifiCommandStatus status,
             String command_data
