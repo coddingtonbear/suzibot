@@ -1,0 +1,213 @@
+Cmp-Mod V01 Created by Cvpcb (2015-02-06 BZR 5410)-product   date = Mon 09 Feb 2015 04:12:04 PM PST
+
+BeginCmp
+TimeStamp = /58543151;
+Reference = C1;
+ValeurCmp = CAP0603-CAP;
+IdModule  = SPARKFUN-CAPACITORS_0603-CAP;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543219;
+Reference = C2;
+ValeurCmp = CAP0603-CAP;
+IdModule  = SPARKFUN-CAPACITORS_0603-CAP;
+EndCmp
+
+BeginCmp
+TimeStamp = /585432E1;
+Reference = C3;
+ValeurCmp = CAP0603-CAP;
+IdModule  = SPARKFUN-CAPACITORS_0603-CAP;
+EndCmp
+
+BeginCmp
+TimeStamp = /585433A9;
+Reference = C4;
+ValeurCmp = CAP0603-CAP;
+IdModule  = SPARKFUN-CAPACITORS_0603-CAP;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543471;
+Reference = C5;
+ValeurCmp = CAP0603-CAP;
+IdModule  = SPARKFUN-CAPACITORS_0603-CAP;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543539;
+Reference = E1;
+ValeurCmp = HM-10-BOARD;
+IdModule  = JNHUAMAO_26.9X13X2.2_BOARD;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543601;
+Reference = J10;
+ValeurCmp = 10118193-0001LF;
+IdModule  = 10118193-0001LF_10118193-0001LF;
+EndCmp
+
+BeginCmp
+TimeStamp = /585436C9;
+Reference = JP1;
+ValeurCmp = JUMPER-3PTH;
+IdModule  = SPARKFUN-RETIRED_1X03;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543791;
+Reference = JP2;
+ValeurCmp = JUMPER-3PTH;
+IdModule  = SPARKFUN-RETIRED_1X03;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543859;
+Reference = PA(X)11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543921;
+Reference = PA11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /585439E9;
+Reference = PB(X)11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543AB1;
+Reference = PB11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543B79;
+Reference = PC(X)11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543C41;
+Reference = PC11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543D09;
+Reference = PD(X)11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543DD1;
+Reference = PD11;
+ValeurCmp = CON_HEADER_1X08-PTH;
+IdModule  = DP_DEVICES.V6_M1X8;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543E99;
+Reference = PROG(X)11;
+ValeurCmp = CON_HEADER_1X06-PTH;
+IdModule  = DP_DEVICES.V6_M1X6;
+EndCmp
+
+BeginCmp
+TimeStamp = /58543F61;
+Reference = PROG11;
+ValeurCmp = CON_HEADER_1X06-PTH;
+IdModule  = DP_DEVICES.V6_M1X6;
+EndCmp
+
+BeginCmp
+TimeStamp = /58544029;
+Reference = PWR(X)11;
+ValeurCmp = CON_HEADER_1X03-PTH;
+IdModule  = DP_DEVICES.V6_M1X3;
+EndCmp
+
+BeginCmp
+TimeStamp = /585440F1;
+Reference = PWR1;
+ValeurCmp = CON_HEADER_1X03-PTH;
+IdModule  = DP_DEVICES.V6_M1X3;
+EndCmp
+
+BeginCmp
+TimeStamp = /585441B9;
+Reference = PWR2;
+ValeurCmp = CON_HEADER_1X03-PTH;
+IdModule  = DP_DEVICES.V6_M1X3;
+EndCmp
+
+BeginCmp
+TimeStamp = /58544281;
+Reference = PWR3;
+ValeurCmp = CON_HEADER_1X03-PTH;
+IdModule  = DP_DEVICES.V6_M1X3;
+EndCmp
+
+BeginCmp
+TimeStamp = /58544349;
+Reference = R1;
+ValeurCmp = RESISTOR0603-RES;
+IdModule  = SPARKFUN-PASSIVES_0603-RES;
+EndCmp
+
+BeginCmp
+TimeStamp = /58544411;
+Reference = R2;
+ValeurCmp = RESISTOR0603-RES;
+IdModule  = SPARKFUN-PASSIVES_0603-RES;
+EndCmp
+
+BeginCmp
+TimeStamp = /585444D9;
+Reference = U$1;
+ValeurCmp = CH340G;
+IdModule  = CH340G_SOIC16;
+EndCmp
+
+BeginCmp
+TimeStamp = /585445A1;
+Reference = U$2;
+ValeurCmp = TXS0101DBVR;
+IdModule  = TEXAS_SOT-23-6;
+EndCmp
+
+BeginCmp
+TimeStamp = /58544669;
+Reference = U$3;
+ValeurCmp = TXS0101DBVR;
+IdModule  = TEXAS_SOT-23-6;
+EndCmp
+
+BeginCmp
+TimeStamp = /58544731;
+Reference = U2;
+ValeurCmp = V_REG_LM1117SOT223;
+IdModule  = SPARKFUN-POWERIC_SOT223;
+EndCmp
+
+BeginCmp
+TimeStamp = /585447F9;
+Reference = Y1;
+ValeurCmp = CRYSTALHC49US;
+IdModule  = SPARKFUN-FREQCTRL_HC49US;
+EndCmp
+
+EndListe
