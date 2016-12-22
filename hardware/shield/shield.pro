@@ -1,4 +1,4 @@
-update=Wednesday, December 21, 2016 'PMt' 04:47:53 PM
+update=Thursday, December 22, 2016 'PMt' 02:59:59 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -27,7 +27,7 @@ NetIExt=net
 version=1
 [eeschema]
 version=1
-LibDir=
+LibDir=../../../../Projects
 [eeschema/libraries]
 LibName1=shield
 LibName2=74xgxx
