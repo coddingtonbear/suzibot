@@ -1,0 +1,56 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# TXB0104
+#
+DEF TXB0104 U 0 40 Y Y 1 L N
+F0 "U" -400 500 50 H V L CNN
+F1 "TXB0104" -400 -600 50 H V L CNN
+F2 "TSSOP14" 0 0 50 H I L CNN
+F3 "4-Bit Bidirectional Voltage-Level Translator with Auto Direction Sensing and +/-15 kV ESD Protect" 0 0 50 H I L CNN "Description"
+F4 "Texas Instruments" 0 0 50 H I L CNN "MF"
+F5 "Unavailable" 0 0 50 H I L CNN "Availability"
+F6 "None" 0 0 50 H I L CNN "Price"
+F7 "None" 0 0 50 H I L CNN "Package"
+F8 "TXB0104" 0 0 50 H I L CNN "MP"
+DRAW
+P 2 0 0 10 -400 400 400 400 N
+P 2 0 0 10 400 400 400 100 N
+P 2 0 0 10 400 100 400 -500 N
+P 2 0 0 10 400 -500 -400 -500 N
+P 2 0 0 10 -400 -500 -400 100 N
+P 2 0 0 10 -400 400 -400 100 N
+P 2 0 0 10 -400 100 -100 100 N
+P 2 0 0 10 -110 50 100 150 N
+P 2 0 0 10 100 100 400 100 N
+P 2 0 0 10 -400 0 -100 0 N
+P 2 0 0 10 -110 -50 100 50 N
+P 2 0 0 10 100 0 400 0 N
+P 2 0 0 10 -400 -100 -100 -100 N
+P 2 0 0 10 -110 -150 100 -50 N
+P 2 0 0 10 100 -100 400 -100 N
+P 2 0 0 10 -400 -200 -100 -200 N
+P 2 0 0 10 -110 -250 100 -150 N
+P 2 0 0 10 100 -200 400 -200 N
+T 0 -460 430 50 0 0 0 1V2-3V6 Normal 0 L B
+T 0 190 430 50 0 0 0 1V65-5V5 Normal 0 L B
+T 0 -150 220 50 0 0 0 VA~<~VB Normal 0 L B
+T 0 160 -480 30 0 0 0 (bank~A) Normal 0 L B
+X VA 1 -600 300 200 R 40 40 0 0 B 
+X A1 2 -600 100 200 R 40 40 0 0 B 
+X A2 3 -600 0 200 R 40 40 0 0 B 
+X A3 4 -600 -100 200 R 40 40 0 0 B 
+X A4 5 -600 -200 200 R 40 40 0 0 B 
+X GND 7 -600 -400 200 R 40 40 0 0 B 
+X VB 14 600 300 200 L 40 40 0 0 B 
+X B1 13 600 100 200 L 40 40 0 0 B 
+X B2 12 600 0 200 L 40 40 0 0 B 
+X B3 11 600 -100 200 L 40 40 0 0 B 
+X B4 10 600 -200 200 L 40 40 0 0 B 
+X OE 8 600 -400 200 L 40 40 0 0 B 
+ENDDRAW
+ENDDEF
+#
+# End Library

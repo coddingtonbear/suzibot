@@ -7,3 +7,5 @@ hardware/suzie_bot_*.pro
 software/*.lck
 software/.piolibdeps/*
 *.lck
+*.bak
+*-bak

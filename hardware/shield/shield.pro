@@ -1,4 +1,4 @@
-update=Tuesday, December 20, 2016 'AMt' 10:28:08 AM
+update=Wednesday, December 21, 2016 'PMt' 04:47:53 PM
 version=1
 last_client=kicad
 [pcbnew]
@@ -115,3 +115,5 @@ LibName83=Xicor
 LibName84=xilinx
 LibName85=zetex
 LibName86=Zilog
+LibName87=TXB0104
+LibName88=74HC4052D
