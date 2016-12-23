@@ -1,3 +1,4 @@
 (fp_lib_table
-  (lib (name "shield")(type Legacy)(uri "/Users/acoddington/Documents/Projects/suzibot/hardware/shield/shield.mod")(options "")(descr ""))
+  (lib (name shield)(type Legacy)(uri /Users/adam.coddington/Documents/Projects/suzibot/hardware/shield/shield.mod)(options "")(descr ""))
+  (lib (name shield-pretty)(type KiCad)(uri "$(KIPRJMOD)/shield.pretty")(options "")(descr ""))
 )

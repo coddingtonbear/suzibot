@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="D">
   <design>
-    <source>/Users/acoddington/Documents/Projects/suzibot/hardware/shield/shield.sch</source>
+    <source>/Users/adam.coddington/Documents/Projects/suzibot/hardware/shield/shield.sch</source>
     <date>Wednesday, December 21, 2016 'PMt' 06:26:28 PM</date>
     <tool>Eeschema (2016-12-18 revision 3ffa37c)-master</tool>
     <sheet number="1" name="/" tstamps="/">
@@ -512,7 +512,7 @@
   </libparts>
   <libraries>
     <library logical="shield">
-      <uri>/Users/acoddington/Documents/Projects/suzibot/hardware/shield/shield.lib</uri>
+      <uri>/Users/adam.coddington/Documents/Projects/suzibot/hardware/shield/shield.lib</uri>
     </library>
     <library logical="cmos_ieee">
       <uri>/Library/Application Support/kicad/library/cmos_ieee.lib</uri>
@@ -521,7 +521,7 @@
       <uri>/Library/Application Support/kicad/library/device.lib</uri>
     </library>
     <library logical="TXB0104">
-      <uri>/Users/acoddington/Documents/Projects/suzibot/hardware/shield/TXB0104.lib</uri>
+      <uri>/Users/adam.coddington/Documents/Projects/suzibot/hardware/shield/TXB0104.lib</uri>
     </library>
   </libraries>
   <nets>
